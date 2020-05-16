@@ -1,6 +1,7 @@
 // сюда импортим все scss файлы
 
-@import "./sass/normalize.scss";
-@import "./sass/base.scss";
+@import './sass/normalize.scss';
+@import './sass/base.scss';
 
 /* Components */
+@import './sass/part2.scss';
