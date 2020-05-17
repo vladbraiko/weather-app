@@ -9,53 +9,55 @@
 
   <body>
     <!-- сюда импортируем статическую разметку -->
-    <!-- 1 -->
-    <section class="search-location container">
-      <form class="search-location__form">
-        <input type="text" name="query" placeholder="Enter the city" />
-        <button type="button" class="search-location__form-btn"></button>
-      </form>
-      <div class="search-location__slider">
-        <button class="search-location__slider-btnPrev"></button>
-        <ul class="search-location__slider-list"></ul>
-        <button class="search-location__slider-btnNext"></button>
-      </div>
-    </section>
-    <!-- 2 -->
-    <section class="content-box">
-      <div class="temperature-box">
-        <img
-          src="./img/weather-pic.png"
-          alt="weather-picture"
-          width="42px"
-          height="22px"
-          class="temperature-img"
-        />
-        <p class="temperature-header">kyiv, UA</p>
-        <div class="degree-box">
-          <p class="degree-title">-3&deg</p>
-          <ul class="degree-list">
-            <li class="degree-item degree-item--line">
-              <p class="degree-first-subtitle">min</p>
-              <p class="degree-second-subtitle">-2 &deg</p>
+    <div class="background-wrapper">
+      <!-- 1 -->
+      <section class="search-location container">
+        <form class="search-location__form js-search-form">
+          <input type="text" name="query" placeholder="Enter the city" />
+          <button type="submit" class="search-location__form-btn"></button>
+        </form>
+        <div class="search-location__slider">
+          <button class="search-location__slider-btnPrev"></button>
+          <ul class="search-location__slider-list"></ul>
+          <button class="search-location__slider-btnNext"></button>
+        </div>
+      </section>
+      <!-- 2 -->
+      <section class="content-box">
+        <div class="temperature-box">
+          <img
+            src="./img/weather-pic.png"
+            alt="weather-picture"
+            width="42px"
+            height="22px"
+            class="temperature-img"
+          />
+          <p class="temperature-header">kyiv, UA</p>
+          <div class="degree-box">
+            <p class="degree-title">-3&deg</p>
+            <ul class="degree-list">
+              <li class="degree-item degree-item--line">
+                <p class="degree-first-subtitle">min</p>
+                <p class="degree-second-subtitle">-2 &deg</p>
+              </li>
+              <li class="degree-item">
+                <p class="degree-first-subtitle">max</p>
+                <p class="degree-second-subtitle">-3 &deg</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="btn-box">
+          <ul class="btn-list">
+            <li>
+              <button class="btn btn-today btn-today-js">today</button>
             </li>
-            <li class="degree-item">
-              <p class="degree-first-subtitle">max</p>
-              <p class="degree-second-subtitle">-3 &deg</p>
+            <li>
+              <button class="btn btn-5-days-js">5 days</button>
             </li>
           </ul>
         </div>
-      </div>
-      <div class="btn-box">
-        <ul class="btn-list">
-          <li>
-            <button class="btn btn-today btn-today-js">today</button>
-          </li>
-          <li>
-            <button class="btn btn-5-days-js">5 days</button>
-          </li>
-        </ul>
-      </div>
-    </section>
+      </section>
+    </div>
   </body>
 </html>
