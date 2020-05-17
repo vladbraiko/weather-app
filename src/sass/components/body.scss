@@ -1,0 +1,28 @@
+body {
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0.05) 100%
+    );
+    padding-top: 30px;
+    padding-bottom: 60px;
+  }
+
+  @media (min-width: 768px) {
+    body {
+    padding-top: 60px;
+    padding-bottom: 70px;
+  }
+}
+
+  @media screen and (min-width: 1120px) {
+    body {
+        padding-top: 80px;
+        padding-bottom: 0;
+    
+    }
+}
