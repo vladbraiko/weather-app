@@ -2,14 +2,19 @@
   width: 280px;
   height: 190px;
   border-radius: 35px;
-  filter: drop-shadow(0px 8px 21.5px rgba(16, 33, 54, 0.59));
-  background-color: rgba(15, 33, 53, 0.6);
+  // filter: drop-shadow(0px 8px 21.5px rgba(16, 33, 54, 0.59));
+  background-color: rgba(16, 33, 54, 0.59);
   margin: 0 auto;
   margin-bottom: 43px;
   color: $main-white-color;
   font-family: $main-font;
   font-weight: 400;
   padding-top: 26px;
+}
+
+.date-container:hover {
+  transition: 200ms linear;
+  background-color: #102136;
 }
 
 .date__day {
@@ -97,7 +102,7 @@
     width: 490px;
     height: 277px;
     padding-top: 36px;
-    background-color: rgba(16, 33, 54, 0.6);
+    // background-color: rgba(16, 33, 54, 0.6);
   }
   .date__day {
     font-size: 90px;
