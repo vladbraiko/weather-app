@@ -5,6 +5,10 @@ const btnOneDay = document.querySelector('.btn-today-js');
 const btnMoreInfo = document.querySelector('#js-btn-more-info');
 const contentBox = document.querySelector('.content-box');
 const btnBox = document.querySelector('.btn-box');
+const part2 = document.querySelector('.part2');
+const part3 = document.querySelector('.part3');
+const dateSunriseTime = document.querySelector('.date__sunrise--time');
+const dateSunsetTime = document.querySelector('.date__sunset--time');
 
 // Переменные для обработки погоды
 let searchName = '';
@@ -15,10 +19,29 @@ let fiveDayData = {};
 // Шаблоны
 import oneDayTemp from '../template/oneday.hbs';
 
+// Рендер времени заката и восхода
+function addZero(i) {
+  if (i < 10) {
+    i = '0' + i;
+  }
+  return i;
+}
+const renderSunTime = (sunrise, sunset) => {
+  const sunriseHours = addZero(sunrise.getHours());
+  const sunriseMinutes = addZero(sunrise.getMinutes());
+  const sunsetHours = addZero(sunset.getHours());
+  const sunsetMinutes = addZero(sunset.getMinutes());
+  dateSunriseTime.textContent = sunriseHours + ':' + sunriseMinutes;
+  dateSunsetTime.textContent = sunsetHours + ':' + sunsetMinutes;
+};
+
 // Рендерим погоду на один день
 const renderOneDayWeather = data => {
   if (!document.querySelector('.temperature-box')) {
     contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
+    renderSunTime(oneDayData.sunrise, oneDayData.sunset);
+    part2.style.display = 'flex';
+    part3.style.display = 'flex';
     btnBox.style.display = 'block';
   } else {
     document.querySelector('.temperature-box').remove();
