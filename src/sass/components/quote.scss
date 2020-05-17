@@ -1,0 +1,40 @@
+.quote {
+    text-align: -webkit-right;
+    &__text {
+      width: 205px;
+      margin-bottom: 14px;
+      font-style: italic;
+    }
+    &__author {
+      font-size: 18px;
+    }
+}
+
+    @media (min-width: 768px) {
+        .container {
+            width: 490px;
+        }
+        .quote {
+          padding-right: 20px;
+        
+          &__text {
+            width: 375px;
+            margin-bottom: 30px;
+          }
+        }
+      }
+      
+      @media screen and (min-width: 1120px) {
+        .container { 
+            width: 1060px;
+            padding-bottom: 105px;
+        }
+        .quote {
+          margin-right: 5%px;
+          margin-top: 5%;
+          &__text {
+            font-size: 22px;
+            
+          }
+        }
+      }
