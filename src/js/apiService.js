@@ -46,6 +46,7 @@ const renderOneDayWeather = data => {
   } else {
     document.querySelector('.temperature-box').remove();
     contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
+    renderSunTime(oneDayData.sunrise, oneDayData.sunset);
   }
 };
 
@@ -113,3 +114,18 @@ form.addEventListener('submit', function (e) {
 btnOneDay.addEventListener('click', () => renderOneDayWeather(oneDayData));
 // Слушаем кнопку 5 Days
 btnFiveDays.addEventListener('click', () => renderFiveDaysWeather(fiveDayData));
+
+// Делаем запрос по умолчанию
+const defaultReqWeather = () => {
+  searchName = 'Kyiv';
+
+  // Получаем данные за один день и записываем в наш обьект
+  req = GetOWM_Request('weather', searchName);
+  getWeatherData(req).then(data => dataHandling('one', data));
+
+  // Получаем данные за 5 дней и записываем в наш обьект
+  req = GetOWM_Request('forecast', searchName);
+  getWeatherData(req).then(data => dataHandling('five', data));
+};
+
+defaultReqWeather();
