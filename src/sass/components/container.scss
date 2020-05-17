@@ -1,0 +1,21 @@
+body {
+  background-color: palevioletred;
+}
+
+.container {
+    width: 280px;
+    margin: 0 auto;
+    background-color: #cdcdda;
+  }
+  
+  @media (min-width: 768px) {
+    .container {
+      width: 608px;
+    }
+  }
+  
+  @media screen and (min-width: 1120px) {
+    .container {
+      width: 1060px;
+    }
+  }
