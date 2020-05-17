@@ -9,5 +9,53 @@
 
   <body>
     <!-- сюда импортируем статическую разметку -->
+    <!-- 1 -->
+    <div class="container part1">
+      <section class="search-location">
+        <form class="search-location__form">
+          <input type="text" name="query" placeholder="Enter the city" />
+          <button type="button" class="search-location__form-btn"></button>
+        </form>
+        <div class="search-location__slider">
+          <button class="search-location__slider-btnPrev"></button>
+          <ul class="search-location__slider-list"></ul>
+          <button class="search-location__slider-btnNext"></button>
+        </div>
+      </section>
+    </div>
+    <!-- 2 -->
+    <div class="container part2">
+      <section class="content-box">
+        <div class="btn-box">
+          <ul class="btn-list">
+            <li>
+              <button class="btn btn-today btn-today-js">today</button>
+            </li>
+            <li>
+              <button class="btn btn-5-days-js">5 days</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <!-- part-3-date +time + sunset sunrise time -->
+    <div class="date-container">
+      <div class="date__day"></div>
+      <div class="date__month-time">
+        <p class="date__month"></p>
+        <p class="date__time"></p>
+      </div>
+      <div class="date__sun">
+        <div class="date__sunrise">
+          <img class="date__sunrise--icon" src="./images/sunrise.png" alt="" />
+          <p class="date__sunrise--time">07:04</p>
+        </div>
+        <div class="vl"></div>
+        <div class="date__sunset">
+          <img class="date__sunset--icon" src="./images/sunset.png" alt="" />
+          <p class="date__sunset--time">17:05</p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
