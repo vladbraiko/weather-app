@@ -80,7 +80,7 @@
 .date__sunrise--icon,
 .date__sunset--icon {
   width: 26px;
-  height: 34px;  
+  height: 34px;
 }
 
 .date__time {
@@ -131,14 +131,14 @@
   .date__sunrise,
   .date__sunset {
     width: 85px;
-  }  
+  }
 }
 
 @media screen and (min-width: 1280px) {
   .date-container {
     width: 601px;
     height: 277px;
-    border-radius: 0px;
+    // border-radius: 0px;
     border-top-right-radius: 35px;
     margin: 0px;
     padding: 50px 63px 106px 110px;
@@ -172,6 +172,6 @@
   }
   .date__sun {
     height: 22px;
-    margin: 0px;    
+    margin: 0px;
   }
 }

@@ -19,7 +19,7 @@ const nth = function (d) {
 const intervalId = setInterval(() => {
   const date = new Date();
   dayNow = date.getDate();
-//   nthNow = 
+  //   nthNow =
   const weekDay = new Array();
   weekDay[0] = 'Sun';
   weekDay[1] = 'Mon';
@@ -30,7 +30,9 @@ const intervalId = setInterval(() => {
   weekDay[6] = 'Sat';
   weekDayNow = weekDay[date.getDay()];
 
-  dayNowRef.innerHTML = `${dayNow}<sup class="date__day--nth">${nth(dayNow)}</sup> ${weekDayNow}`;
+  dayNowRef.innerHTML = `${dayNow}<sup class="date__day--nth">${nth(
+    dayNow,
+  )}</sup> ${weekDayNow}`;
 
   const month = new Array();
   month[0] = 'January';
@@ -53,7 +55,6 @@ const intervalId = setInterval(() => {
     pad(date.getMinutes()) +
     ':' +
     pad(date.getSeconds());
-  
 }, 1000);
 
 function pad(value) {
