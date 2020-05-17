@@ -1,13 +1,35 @@
 // DOM переменные
 const form = document.querySelector('.search-location__form');
-const btnFiveDays = document.querySelector('#js-btn-five-days');
+const btnFiveDays = document.querySelector('.btn-5-days-js');
+const btnOneDay = document.querySelector('.btn-today-js');
 const btnMoreInfo = document.querySelector('#js-btn-more-info');
+const contentBox = document.querySelector('.content-box');
+const btnBox = document.querySelector('.btn-box');
 
 // Переменные для обработки погоды
 let searchName = '';
 let req = '';
 let oneDayData = {};
 let fiveDayData = {};
+
+// Шаблоны
+import oneDayTemp from '../template/oneday.hbs';
+
+// Рендерим погоду на один день
+const renderOneDayWeather = data => {
+  if (!document.querySelector('.temperature-box')) {
+    contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
+    btnBox.style.display = 'block';
+  } else {
+    document.querySelector('.temperature-box').remove();
+    contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
+  }
+};
+
+// Рендерим погоду на 5 дней
+const renderFiveDaysWeather = data => {
+  document.querySelector('.temperature-box').remove();
+};
 
 // Получаем правильную ссылку
 function GetOWM_Request(RequestType, Location) {
@@ -37,6 +59,7 @@ const dataHandling = (days, OWMData) => {
     oneDayData.sunrise = new Date(OWMData.sys.sunrise * 1000);
     oneDayData.sunset = new Date(OWMData.sys.sunset * 1000);
 
+    renderOneDayWeather(oneDayData);
     console.log(oneDayData);
   }
   if (days == 'five') {
@@ -62,3 +85,8 @@ form.addEventListener('submit', function (e) {
   req = GetOWM_Request('forecast', searchName);
   getWeatherData(req).then(data => dataHandling('five', data));
 });
+
+// Слушаем кнопку Today
+btnOneDay.addEventListener('click', () => renderOneDayWeather(oneDayData));
+// Слушаем кнопку 5 Days
+btnFiveDays.addEventListener('click', () => renderFiveDaysWeather(fiveDayData));
