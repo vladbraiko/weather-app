@@ -20,7 +20,7 @@
     &::before {
       content: '';
       display: inline-block;
-      //background: url() no-repeat center;
+      background: url(img/icon-location.png) no-repeat center;
       background-size: contain;
       width: 22px;
       height: 22px;
@@ -43,7 +43,7 @@
 
     &-btn {
       background-color: #fff;
-      //background-image: url();
+      background-image: url(img/icon-star.png);
       background-position: center;
       background-repeat: no-repeat;
       background-size: 19px 21px;

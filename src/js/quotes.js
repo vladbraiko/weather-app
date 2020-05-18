@@ -265,3 +265,11 @@ const quotes = [
     author: 'Rand Fishkin',
   },
 ];
+
+//function renderRandomQuote() {
+//  const element = qoutes[Math.floor(Math.random() * qoutes.length)];
+//  document.querySelector(".quote__text").textContent = element[0];
+//  document.querySelector(".quote__author").textContent = element[1];
+//}
+//
+//export { renderRandomQuote };

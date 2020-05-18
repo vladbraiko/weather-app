@@ -9,32 +9,225 @@
 
   <body>
     <!-- сюда импортируем статическую разметку -->
-    <!-- 1 -->
-    <div class="container part1">
-      <section class="search-location">
-        <form class="search-location__form">
-          <input type="text" name="query" placeholder="Enter the city" />
-          <button type="button" class="search-location__form-btn"></button>
-        </form>
-        <div class="search-location__slider">
-          <button class="search-location__slider-btnPrev"></button>
-          <ul class="search-location__slider-list"></ul>
-          <button class="search-location__slider-btnNext"></button>
+    <div class="background-wrapper">
+      <!-- 1 -->
+      <div class="container part1">
+        <section class="search-location">
+          <form class="search-location__form">
+            <input type="text" name="query" placeholder="Enter the city" />
+            <button type="button" class="search-location__form-btn"></button>
+          </form>
+          <div class="search-location__slider">
+            <button class="search-location__slider-btnPrev"></button>
+            <ul class="search-location__slider-list"></ul>
+            <button class="search-location__slider-btnNext"></button>
+          </div>
+        </section>
+      </div>
+      <!-- 2 -->
+      <div class="container part2">
+        <section class="content-box">
+          <div class="btn-box">
+            <ul class="btn-list">
+              <li>
+                <button class="btn btn-today btn-today-js">today</button>
+              </li>
+              <li>
+                <button class="btn btn-5-days-js">5 days</button>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+      <!-- part-3-date +time + sunset sunrise time -->
+      <div class="container part3">
+        <div class="date-container">
+          <div class="date__day"></div>
+          <div class="date__month-time">
+            <p class="date__month"></p>
+            <p class="date__time"></p>
+          </div>
+          <div class="date__sun">
+            <div class="date__sunrise">
+              <img
+                class="date__sunrise--icon"
+                src="./images/sunrise.png"
+                alt=""
+              />
+              <p class="date__sunrise--time">07:04</p>
+            </div>
+            <div class="vl"></div>
+            <div class="date__sunset">
+              <img
+                class="date__sunset--icon"
+                src="./images/sunset.png"
+                alt=""
+              />
+              <p class="date__sunset--time">17:05</p>
+            </div>
+          </div>
         </div>
-      </section>
-    </div>
-    <!-- 2 -->
-    <div class="container part2">
-      <section class="content-box">
-        <div class="btn-box">
-          <ul class="btn-list">
-            <li>
-              <button class="btn btn-today btn-today-js">today</button>
-            </li>
-            <li>
-              <button class="btn btn-5-days-js">5 days</button>
-            </li>
-          </ul>
+        <!-- 4 -->
+        <div class="quote">
+          <p class="quote__text">
+            Who cares about the clouds when we're together? Just sing a song and
+            bring the sunny weather.
+          </p>
+          <p class="quote__author">Dale Evans</p>
+        </div>
+      </div>
+
+      <!-- Part 5 -->
+
+      <section class="five-days-containeer">
+        <!-- City  name -->
+        <h2 class="five-days-containeer__city-name">Kyiv, UA</h2>
+        <!-- 5 days containeer -->
+        <ul class="days-list">
+          <!-- First day -->
+          <li class="days-list__item">
+            <h3
+              class="days-list__day-of-the-week days-list__day-of-the-week--active"
+            >
+              Monday
+            </h3>
+            <h4 class="days-list__date">10 Feb</h4>
+            <img
+              class="days-list__img"
+              src="./img/icons/cloud.png"
+              alt="cloud"
+            />
+            <div class="days-list__temperature-block">
+              <div class="days-list__min days-list__min-max">
+                <p class="days-list__title">
+                  min
+                </p>
+                <p class="days-list__value days-list__value--degrees">
+                  -2
+                </p>
+              </div>
+              <img
+                src="./img/icons/line.png"
+                alt="line"
+                class="days-list__line days-list__line--mobile"
+              />
+              <img
+                src="./img/icons/tablet/line.png"
+                alt="line"
+                class="days-list__line days-list__line--tablet_desktop"
+              />
+              <div class="days-list__min-max">
+                <p class="days-list__title">
+                  max
+                </p>
+                <p class="days-list__value days-list__value--degrees">
+                  -3
+                </p>
+              </div>
+            </div>
+            <button class="days-list__more-btn" type="button">
+              more info
+            </button>
+          </li>
+          <!-- Second day -->
+          <li class="days-list__item">
+            <h3 class="days-list__day-of-the-week">
+              Tuesday
+            </h3>
+            <h4 class="days-list__date">11 Feb</h4>
+            <img
+              class="days-list__img"
+              src="./img/icons/cloud.png"
+              alt="cloud"
+            />
+            <div class="days-list__temperature-block">
+              <div class="days-list__min days-list__min-max">
+                <p class="days-list__title">
+                  min
+                </p>
+                <p class="days-list__value days-list__value--degrees">
+                  -2
+                </p>
+              </div>
+              <img
+                src="./img/icons/line.png"
+                alt="line"
+                class="days-list__line days-list__line--mobile"
+              />
+              <img
+                src="./img/icons/tablet/line.png"
+                alt="line"
+                class="days-list__line days-list__line--tablet_desktop"
+              />
+              <div class="days-list__min-max">
+                <p class="days-list__title">
+                  max
+                </p>
+                <p class="days-list__value days-list__value--degrees">
+                  -3
+                </p>
+              </div>
+            </div>
+            <button class="days-list__more-btn" type="button">
+              more info
+            </button>
+          </li>
+          <!-- Third day -->
+          <li class="days-list__item">
+            <h3 class="days-list__day-of-the-week">
+              Wednesday
+            </h3>
+            <h4 class="days-list__date">12 Feb</h4>
+            <img
+              class="days-list__img"
+              src="./img/icons/cloud.png"
+              alt="cloud"
+            />
+            <div class="days-list__temperature-block">
+              <div class="days-list__min days-list__min-max">
+                <p class="days-list__title">
+                  min
+                </p>
+                <p class="days-list__value days-list__value--degrees">
+                  -2
+                </p>
+              </div>
+              <img
+                src="./img/icons/line.png"
+                alt="line"
+                class="days-list__line days-list__line--mobile"
+              />
+              <img
+                src="./img/icons/tablet/line.png"
+                alt="line"
+                class="days-list__line days-list__line--tablet_desktop"
+              />
+              <div class="days-list__min-max">
+                <p class="days-list__title">
+                  max
+                </p>
+                <p class="days-list__value days-list__value--degrees">
+                  -3
+                </p>
+              </div>
+            </div>
+            <button class="days-list__more-btn" type="button">
+              more info
+            </button>
+          </li>
+        </ul>
+        <!-- Scroll arrows -->
+        <div class="five-days-containeer__scroll">
+          <img
+            src="./img/icons/left-arrow.png"
+            alt="left-arrow"
+            class="five-days-containeer__arrow five-days-containeer__arrow--hover"
+          />
+          <img
+            src="./img/icons/right-arrow.png"
+            alt="right-arrow"
+            class="five-days-containeer__arrow five-days-containeer__arrow--hover"
+          />
         </div>
       </section>
     </div>
