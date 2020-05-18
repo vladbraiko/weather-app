@@ -2,9 +2,14 @@
 
 @import './sass/normalize.scss';
 @import './sass/base.scss';
+@import './sass/fonts.scss';
+@import './sass/helpers/variables.scss';
+@import './sass/date-container-part3.scss';
 
 /* Components */
 @import './sass/part2.scss';
-@import './sass/components/container.scss';
+@import './sass/part3.scss';
 @import './sass/components/search.scss';
+@import './sass/components/quote.scss';
+@import './sass/components/body.scss';
 @import './sass/part5.scss';
