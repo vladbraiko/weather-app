@@ -82,6 +82,55 @@
       list-style: none;
       margin: 0;
       padding: 0;
+      display: flex;
+      justify-content: space-between;
+      width: 178px;
+    }
+    &-list svg {
+      display: block;
+      height: 100%;
+      width: 12px;
+      fill: #ffffffff;
+    }
+
+    &-list-item {
+      border-radius: 12px;
+      background-color: rgb(16, 33, 54);
+      opacity: 0.471;
+      padding: 5px 5px 5px 10px;
+      transition: opacity 200ms linear;
+    }
+    &-list-item:hover,
+    &-list-item:focus {
+      opacity: 1;
+    }
+
+    &-list-content {
+      display: flex;
+      color: white;
+      font-size: 12px;
+    }
+
+    &-list-sity {
+      margin-right: 12px;
+      cursor: pointer;
+    }
+
+    &-list-sity::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      background-color: #ffffff;
+      margin-bottom: 1px;
+    }
+
+    &-list-content-renove-city-button {
+      background-color: transparent;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      height: 16px;
     }
   }
 }
@@ -100,7 +149,7 @@
     }
 
     .search-location__slider-list {
-      width: 375px;
+      // width: 375px;
     }
   }
 }
