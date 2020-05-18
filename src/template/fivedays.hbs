@@ -1,0 +1,31 @@
+{{#each days}}
+<li class="days-list__item">
+    <h3 class="days-list__day-of-the-week days-list__day-of-the-week--active">
+        {{Day}}
+    </h3>
+    <h4 class="days-list__date">{{DayNum}} {{Month}}</h4>
+    {{!-- <img class="days-list__img" src="./img/icons/cloud.png" alt="cloud" /> --}}
+    <i class="days-list__img tmp-cloud-icon"></i>
+    <div class="days-list__temperature-block">
+        <div class="days-list__min days-list__min-max">
+            <p class="days-list__title">
+                min
+            </p>
+            <p class="days-list__value days-list__value--degrees">{{TempMin}}</p>
+        </div>
+        {{!-- <img src="./img/icons/line.png" alt="line" class="days-list__line days-list__line--mobile" />
+        <img src="./img/icons/tablet/line.png" alt="line" class="days-list__line days-list__line--tablet_desktop" /> --}}
+        <i class="days-list__line days-list__line--mobile tmp-line-m-icon"></i>
+        <i class="days-list__line days-list__line--tablet_desktop tmp-line-tp-icon"></i>
+        <div class="days-list__min-max">
+            <p class="days-list__title">
+                max
+            </p>
+            <p class="days-list__value days-list__value--degrees">{{TempMax}}</p>
+        </div>
+    </div>
+    <button class="days-list__more-btn" type="button">
+        more info
+    </button>
+</li>
+{{/each}}
