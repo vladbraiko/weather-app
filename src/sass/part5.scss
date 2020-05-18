@@ -1,5 +1,6 @@
 .five-days-containeer {
   display: none;
+  margin: 0 auto;
   border-radius: 35px;
   background-color: rgba(16, 33, 54, 0.8);
   box-shadow: 0px 8px 43px 0px rgba(16, 33, 54, 0.59);
@@ -119,7 +120,7 @@
   }
 
   &__line {
-    margin: 0 3px;
+    // margin: 0 3px;
 
     &--tablet_desktop {
       display: none;
@@ -199,7 +200,7 @@
     }
 
     &__line {
-      margin: 0 10px;
+      // margin: 0 10px;
 
       &--tablet_desktop {
         display: block;
@@ -257,7 +258,7 @@
     }
 
     &__min-max {
-      width: 35px;
+      width: 30px;
     }
 
     &__title {
@@ -269,7 +270,7 @@
       font-size: 25px;
     }
     &__line {
-      margin: 0 15px;
+      // margin: 0 15px;
 
       &--tablet_desktop {
         display: block;
@@ -280,4 +281,18 @@
       }
     }
   }
+}
+
+.tmp-cloud-icon {
+  background: url(img/icons/cloud.png);
+  display: block;
+}
+
+.tmp-line-m-icon {
+  background: url(img/icons/line.png);
+  width: 1px;
+}
+.tmp-line-tp-icon {
+  background: url(img/icons/tablet/line.png);
+  width: 1px;
 }

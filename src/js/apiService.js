@@ -7,8 +7,11 @@ const contentBox = document.querySelector('.content-box');
 const btnBox = document.querySelector('.btn-box');
 const part2 = document.querySelector('.part2');
 const part3 = document.querySelector('.part3');
+const part5 = document.querySelector('.five-days-containeer');
+const part6 = document.querySelector('.moreInfo');
 const dateSunriseTime = document.querySelector('.date__sunrise--time');
 const dateSunsetTime = document.querySelector('.date__sunset--time');
+const daysFiveListblock = document.querySelector('.days-list');
 
 // Переменные для обработки погоды
 let searchName = '';
@@ -18,6 +21,7 @@ let fiveDayData = {};
 
 // Шаблоны
 import oneDayTemp from '../template/oneday.hbs';
+import fiveDayTemp from '../template/fivedays.hbs';
 
 // Рендер времени заката и восхода
 function addZero(i) {
@@ -42,6 +46,7 @@ const renderOneDayWeather = data => {
     renderSunTime(oneDayData.sunrise, oneDayData.sunset);
     part2.style.display = 'flex';
     part3.style.display = 'flex';
+    part5.style.display = 'none';
     btnBox.style.display = 'block';
   } else {
     document.querySelector('.temperature-box').remove();
@@ -52,7 +57,17 @@ const renderOneDayWeather = data => {
 
 // Рендерим погоду на 5 дней
 const renderFiveDaysWeather = data => {
-  document.querySelector('.temperature-box').remove();
+  if (document.querySelector('.temperature-box')) {
+    document.querySelector('.temperature-box').remove();
+  }
+  const daysListItem = document.querySelectorAll('.days-list__item');
+  if (daysListItem) {
+    daysListItem.forEach(e => e.remove());
+  }
+  // part2.style.display = 'none';
+  part3.style.display = 'none';
+  part5.style.display = 'block';
+  daysFiveListblock.innerHTML += fiveDayTemp(data);
 };
 
 // Получаем правильную ссылку
@@ -73,6 +88,35 @@ const getWeatherData = async OWM => {
 };
 
 // Обрабатываем данные и записываем в свои локальные
+const weekDayNow = data => {
+  const weekDay = [];
+  weekDay[0] = 'Sunday';
+  weekDay[1] = 'Monday';
+  weekDay[2] = 'Tuesday';
+  weekDay[3] = 'Wednesday';
+  weekDay[4] = 'Thursday';
+  weekDay[5] = 'Friday';
+  weekDay[6] = 'Saturday';
+  return weekDay[data];
+};
+
+const monthNow = data => {
+  const month = [];
+  month[0] = 'Jan';
+  month[1] = 'Feb';
+  month[2] = 'Mar';
+  month[3] = 'Apr';
+  month[4] = 'May';
+  month[5] = 'Jun';
+  month[6] = 'Jul';
+  month[7] = 'Aug';
+  month[8] = 'Sep';
+  month[9] = 'Oct';
+  month[10] = 'Nov';
+  month[11] = 'Dec';
+  return month[data];
+};
+
 const dataHandling = (days, OWMData) => {
   if (days == 'one') {
     oneDayData.temp = Math.floor(OWMData.main.temp - 273.15);
@@ -90,7 +134,39 @@ const dataHandling = (days, OWMData) => {
     fiveDayData.city = OWMData.city.name;
     fiveDayData.countryCode = OWMData.city.country;
     fiveDayData.list = OWMData.list;
-
+    fiveDayData.days = [];
+    fiveDayData.list.map(e => {
+      const dataTime = new Date(e.dt * 1000);
+      const arr = fiveDayData.days.map(e => e.DayNum);
+      const daysList = {};
+      if (arr.indexOf(dataTime.getDate()) == -1) {
+        daysList.DayNum = dataTime.getDate();
+        daysList.Day = weekDayNow(dataTime.getDay());
+        daysList.Month = monthNow(dataTime.getMonth());
+        fiveDayData.days.push(daysList);
+      }
+    });
+    fiveDayData.days.map(daysNumber => {
+      const arr = fiveDayData.list.filter(e => {
+        const dataTime = new Date(e.dt * 1000);
+        if (dataTime.getUTCDate() == daysNumber.DayNum) {
+          return e;
+        }
+      });
+      if (arr.length == 0) {
+        daysNumber.isData = false;
+      } else {
+        const arrTemp = arr.map(e => Math.floor(e.main.temp - 273.15));
+        daysNumber.TempMin = Math.min(...arrTemp);
+        daysNumber.TempMax = Math.max(...arrTemp);
+        daysNumber.list = arr;
+      }
+    });
+    if (fiveDayData.days[5].isData == false) {
+      fiveDayData.days.pop();
+    } else {
+      fiveDayData.days.shift();
+    }
     console.log(fiveDayData);
   }
 };
