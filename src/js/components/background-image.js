@@ -6,7 +6,7 @@ backgroundImageService
   .makeQuery()
   .then(setBackgroundImage)
   .catch(() => {
-    backgroundImageService.setReserveImage();
+    backgroundImageService.makeReserveQuery().then(setBackgroundImage);
   });
 
 refs.searchInput.addEventListener('submit', changeBackgroundImage);
@@ -20,7 +20,11 @@ function changeBackgroundImage(event) {
   backgroundImageService.makeQuery().then(setBackgroundImage);
 }
 
-function setBackgroundImage(backgroundImage) {
-  refs.backgroundWrapper.style = `background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)),
-  url('${backgroundImage[6].largeImageURL}') center; background-size: cover;`;
+function setBackgroundImage(backgroundImages) {
+  if (backgroundImages.length === 0) {
+    backgroundImageService.makeReserveQuery().then(setBackgroundImage);
+  } else {
+    refs.backgroundWrapper.style = `background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)),
+  url('${backgroundImages[6].largeImageURL}') center; background-size: cover;`;
+  }
 }
