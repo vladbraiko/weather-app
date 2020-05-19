@@ -2,7 +2,6 @@
 const form = document.querySelector('.search-location__form');
 const btnFiveDays = document.querySelector('.btn-5-days-js');
 const btnOneDay = document.querySelector('.btn-today-js');
-const btnMoreInfo = document.querySelector('#js-btn-more-info');
 const contentBox = document.querySelector('.content-box');
 const btnBox = document.querySelector('.btn-box');
 const part2 = document.querySelector('.part2');
@@ -12,6 +11,7 @@ const part6 = document.querySelector('.moreInfo');
 const dateSunriseTime = document.querySelector('.date__sunrise--time');
 const dateSunsetTime = document.querySelector('.date__sunset--time');
 const daysFiveListblock = document.querySelector('.days-list');
+const moreInfoBlock = document.querySelector('.moreInfo__block');
 
 // Переменные для обработки погоды
 let searchName = '';
@@ -22,6 +22,7 @@ let fiveDayData = {};
 // Шаблоны
 import oneDayTemp from '../template/oneday.hbs';
 import fiveDayTemp from '../template/fivedays.hbs';
+import moreInfoTemp from '../template/moreInfo.hbs';
 
 // Рендер времени заката и восхода
 function addZero(i) {
@@ -47,6 +48,8 @@ const renderOneDayWeather = data => {
     part2.style.display = 'flex';
     part3.style.display = 'flex';
     part5.style.display = 'none';
+    part5.style.borderRadius = '35px';
+    part6.style.display = 'none';
     btnBox.style.display = 'block';
   } else {
     document.querySelector('.temperature-box').remove();
@@ -64,7 +67,6 @@ const renderFiveDaysWeather = data => {
   if (daysListItem) {
     daysListItem.forEach(e => e.remove());
   }
-  // part2.style.display = 'none';
   part3.style.display = 'none';
   part5.style.display = 'block';
   daysFiveListblock.innerHTML += fiveDayTemp(data);
@@ -190,6 +192,44 @@ form.addEventListener('submit', function (e) {
 btnOneDay.addEventListener('click', () => renderOneDayWeather(oneDayData));
 // Слушаем кнопку 5 Days
 btnFiveDays.addEventListener('click', () => renderFiveDaysWeather(fiveDayData));
+// Слушаем кнопку more info
+daysFiveListblock.addEventListener('click', handleImgClick);
+
+const renderMoreInfo = target => {
+  part5.style.borderRadius = '35px 35px 0 0';
+  part6.style.display = 'block';
+  const day = Number(target.dataset.day);
+  const moreDaysListItem = document.querySelectorAll('.timeWeather');
+  if (moreDaysListItem) {
+    moreDaysListItem.forEach(e => e.remove());
+  }
+  fiveDayData.days.forEach(e => {
+    if (e.DayNum == day) {
+      const moreInfoArr = [];
+      e.list.forEach(e => {
+        const dataTime = new Date(e.dt * 1000);
+        const obj = {};
+        obj.time =
+          addZero(dataTime.getHours()) + ':' + addZero(dataTime.getMinutes());
+        obj.temp = Math.floor(e.main.temp - 273.15);
+        obj.humidity = e.main.humidity;
+        obj.pressure = e.main.pressure;
+        obj.speed = e.wind.speed.toFixed(1);
+        moreInfoArr.push(obj);
+      });
+      moreInfoBlock.innerHTML += moreInfoTemp(moreInfoArr);
+      console.log(moreInfoArr);
+    }
+  });
+};
+
+function handleImgClick(event) {
+  event.preventDefault();
+  const target = event.target;
+  if (target.nodeName == 'BUTTON') {
+    renderMoreInfo(target);
+  }
+}
 
 // Делаем запрос по умолчанию
 const defaultReqWeather = () => {
