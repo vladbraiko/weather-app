@@ -229,7 +229,10 @@ function handleImgClick(event) {
   if (target.nodeName == 'BUTTON') {
     renderMoreInfo(target);
   }
+
 }
+
+
 
 // Делаем запрос по умолчанию
 const defaultReqWeather = () => {
