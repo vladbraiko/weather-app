@@ -13,6 +13,10 @@ const dateSunriseTime = document.querySelector('.date__sunrise--time');
 const dateSunsetTime = document.querySelector('.date__sunset--time');
 const daysFiveListblock = document.querySelector('.days-list');
 const moreInfoBlock = document.querySelector('.moreInfo__block');
+const part2City = document.querySelector('.part2-city');
+const fiveDaysContaineerCityName = document.querySelector(
+  '.five-days-containeer__city-name',
+);
 
 // Переменные для обработки погоды
 let searchName = '';
@@ -54,6 +58,13 @@ const renderOneDayWeather = data => {
     btnBox.style.display = 'block';
     btnToday.style.backgroundColor = '#f7f7f7';
     btnFiveDays.removeAttribute('style');
+    part2City.removeAttribute('style');
+    part2.classList.add('part2');
+    part2.classList.remove('part2-fiveday');
+    contentBox.classList.add('content-box');
+    contentBox.classList.remove('content-box-fiveday');
+    part2City.style.display = 'none';
+    part2City.classList.remove('display-block');
   } else {
     document.querySelector('.temperature-box').remove();
     contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
@@ -67,6 +78,15 @@ const renderFiveDaysWeather = data => {
     document.querySelector('.temperature-box').remove();
     btnToday.removeAttribute('style');
     btnFiveDays.style.backgroundColor = '#f7f7f7';
+    part2City.removeAttribute('style');
+    part2City.classList.add('display-block');
+    part2City.textContent = fiveDayData.city + ', ' + fiveDayData.countryCode;
+    fiveDaysContaineerCityName.textContent =
+      fiveDayData.city + ', ' + fiveDayData.countryCode;
+    part2.classList.remove('part2');
+    part2.classList.add('part2-fiveday');
+    contentBox.classList.remove('content-box');
+    contentBox.classList.add('content-box-fiveday');
   }
   const daysListItem = document.querySelectorAll('.days-list__item');
   if (daysListItem) {
@@ -223,7 +243,6 @@ const renderMoreInfo = target => {
         moreInfoArr.push(obj);
       });
       moreInfoBlock.innerHTML += moreInfoTemp(moreInfoArr);
-      // console.log(moreInfoArr);
     }
   });
 };
