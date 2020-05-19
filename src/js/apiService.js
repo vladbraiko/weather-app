@@ -1,5 +1,6 @@
 // DOM переменные
 const form = document.querySelector('.search-location__form');
+const btnToday = document.querySelector('.btn-today-js');
 const btnFiveDays = document.querySelector('.btn-5-days-js');
 const btnOneDay = document.querySelector('.btn-today-js');
 const contentBox = document.querySelector('.content-box');
@@ -51,6 +52,8 @@ const renderOneDayWeather = data => {
     part5.style.borderRadius = '35px';
     part6.style.display = 'none';
     btnBox.style.display = 'block';
+    btnToday.style.backgroundColor = '#f7f7f7';
+    btnFiveDays.removeAttribute('style');
   } else {
     document.querySelector('.temperature-box').remove();
     contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
@@ -62,6 +65,8 @@ const renderOneDayWeather = data => {
 const renderFiveDaysWeather = data => {
   if (document.querySelector('.temperature-box')) {
     document.querySelector('.temperature-box').remove();
+    btnToday.removeAttribute('style');
+    btnFiveDays.style.backgroundColor = '#f7f7f7';
   }
   const daysListItem = document.querySelectorAll('.days-list__item');
   if (daysListItem) {
@@ -193,7 +198,7 @@ btnOneDay.addEventListener('click', () => renderOneDayWeather(oneDayData));
 // Слушаем кнопку 5 Days
 btnFiveDays.addEventListener('click', () => renderFiveDaysWeather(fiveDayData));
 // Слушаем кнопку more info
-daysFiveListblock.addEventListener('click', handleImgClick);
+daysFiveListblock.addEventListener('click', handleBtnMIClick);
 
 const renderMoreInfo = target => {
   part5.style.borderRadius = '35px 35px 0 0';
@@ -218,12 +223,12 @@ const renderMoreInfo = target => {
         moreInfoArr.push(obj);
       });
       moreInfoBlock.innerHTML += moreInfoTemp(moreInfoArr);
-      console.log(moreInfoArr);
+      // console.log(moreInfoArr);
     }
   });
 };
 
-function handleImgClick(event) {
+function handleBtnMIClick(event) {
   event.preventDefault();
   const target = event.target;
   if (target.nodeName == 'BUTTON') {
