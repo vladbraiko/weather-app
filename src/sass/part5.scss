@@ -143,6 +143,10 @@
     outline: none;
     cursor: pointer;
 
+    &__active {
+      color: #ffffff;
+    }
+
     &:active,
     &:hover,
     &:focus {
