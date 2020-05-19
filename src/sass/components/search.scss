@@ -42,21 +42,15 @@
     }
 
     &-btn {
-      background-color: #fff;
-      background-image: url(img/icon-star.png);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: 19px 21px;
+      fill: #000000;
+      opacity: 0.471;
       border: none;
-      width: 30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
       outline: none;
       border-radius: 50%;
       cursor: pointer;
-
-      &:hover {
-        background-color: #f1f1f1;
-      }
+      padding: 0;
     }
   }
 
@@ -67,15 +61,23 @@
 
     &-btnPrev,
     &-btnNext {
-      width: 27px;
-      height: 27px;
-      background-color: rgba(241, 241, 241, 0.397);
+      width: 28px;
+      height: 28px;
+      background-color: transparent;
       border-radius: 50%;
       border: none;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 6px 10px;
       cursor: pointer;
+      padding: 0;
+
+      & svg {
+        fill: #102136;
+        opacity: 0.471;
+        transition: opacity 200ms linear;
+      }
+
+      & svg:hover {
+        opacity: 1;
+      }
     }
 
     &-list {
@@ -114,6 +116,9 @@
     &-list-sity {
       margin-right: 12px;
       cursor: pointer;
+      font-family: $main-font;
+      font-weight: 400;
+      font-size: 12px;
     }
 
     &-list-sity::after {
@@ -131,6 +136,7 @@
       color: #ffffff;
       cursor: pointer;
       height: 16px;
+      outline: none;
     }
   }
 }
