@@ -38,7 +38,7 @@
       font-family: $main-font;
 
       &::placeholder {
-        color: #00000062;
+        color: $main-black-color;
         font-size: 14px;
       }
     }

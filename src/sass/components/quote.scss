@@ -1,5 +1,9 @@
 .quote {
   text-align: -webkit-right;
+  font-family: $main-font;
+  color: $main-white-color;
+  padding: 0 20px;
+  
   &__text {
     width: 205px;
     margin-bottom: 14px;
@@ -7,12 +11,14 @@
   }
   &__author {
     font-size: 18px;
+    font-style: regular;
   }
 }
 
 @media (min-width: 768px) {
   .quote {
-    padding-right: 20px;
+    
+    padding-right: 140px;
 
     &__text {
       width: 375px;
@@ -23,7 +29,7 @@
 
 @media screen and (min-width: 1120px) {
   .quote {
-    margin-right: 5%px;
+    margin-right: 5%;
     margin-top: 5%;
     &__text {
       font-size: 22px;
