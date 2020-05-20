@@ -144,6 +144,15 @@ const monthNow = data => {
   return month[data];
 };
 
+const get12HourData = data => {
+  data.setMilliseconds(0);
+  data.setSeconds(0);
+  data.setMinutes(0);
+  data.setHours(12);
+  const dayData = fiveDayData.list.find(e => e.dt == data.getTime() / 1000);
+  return dayData;
+};
+
 const dataHandling = (days, OWMData) => {
   if (days == 'one') {
     oneDayData.temp = Math.floor(OWMData.main.temp - 273.15);
@@ -153,6 +162,11 @@ const dataHandling = (days, OWMData) => {
     oneDayData.countryCode = OWMData.sys.country;
     oneDayData.sunrise = new Date(OWMData.sys.sunrise * 1000);
     oneDayData.sunset = new Date(OWMData.sys.sunset * 1000);
+    oneDayData.icon =
+      'http://openweathermap.org/img/wn/' + OWMData.weather[0].icon + '.png';
+    oneDayData.iconDescription = OWMData.weather[0].description;
+    // console.log(OWMData);
+    // console.log(oneDayData);
 
     renderOneDayWeather(oneDayData);
   }
@@ -169,6 +183,16 @@ const dataHandling = (days, OWMData) => {
         daysList.DayNum = dataTime.getDate();
         daysList.Day = weekDayNow(dataTime.getDay());
         daysList.Month = monthNow(dataTime.getMonth());
+        const getIcon = get12HourData(dataTime);
+        if (getIcon) {
+          daysList.icon =
+            'http://openweathermap.org/img/wn/' +
+            getIcon.weather[0].icon +
+            '.png';
+          daysList.iconDescription = getIcon.weather[0].description;
+        }
+
+        // daysList.icon = getIcon.weather.icon;
         fiveDayData.days.push(daysList);
       }
     });
@@ -239,6 +263,9 @@ const renderMoreInfo = target => {
         obj.humidity = e.main.humidity;
         obj.pressure = e.main.pressure;
         obj.speed = e.wind.speed.toFixed(1);
+        obj.icon =
+          'http://openweathermap.org/img/wn/' + e.weather[0].icon + '.png';
+        obj.iconDescription = e.weather[0].description;
         moreInfoArr.push(obj);
       });
       moreInfoBlock.innerHTML += moreInfoTemp(moreInfoArr);
