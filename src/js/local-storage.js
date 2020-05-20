@@ -1,7 +1,4 @@
-const refs = {
-  addToLocalStorageBtn: document.querySelector('.search-location__form-btn'),
-  form: document.querySelector('.search-form'),
-};
+import refs from './refs.js';
 const favoriteSities = [];
 
 refs.addToLocalStorageBtn.addEventListener('click', addToLocalStorage);
