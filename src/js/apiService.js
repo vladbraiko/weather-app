@@ -253,14 +253,11 @@ function handleBtnMIClick(event) {
   if (target.nodeName == 'BUTTON') {
     renderMoreInfo(target);
   }
-
 }
 
-
-
 // Делаем запрос по умолчанию
-const defaultReqWeather = () => {
-  searchName = 'Kyiv';
+const defaultReqWeather = searchName => {
+  searchName = searchName || 'Kyiv';
 
   // Получаем данные за один день и записываем в наш обьект
   req = GetOWM_Request('weather', searchName);
@@ -272,3 +269,5 @@ const defaultReqWeather = () => {
 };
 
 defaultReqWeather();
+
+export { defaultReqWeather };
