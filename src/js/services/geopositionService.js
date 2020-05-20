@@ -1,4 +1,7 @@
 import axios from 'axios';
+import backgroundImageService from '../services/background-image-service';
+import { defaultReqWeather } from '../apiService';
+import { setBackgroundImage } from '../components/background-image';
 
 navigator.geolocation.getCurrentPosition(success);
 
@@ -7,5 +10,18 @@ function success(position) {
   const coordinates = position.coords;
   const url = `https://api.opencagedata.com/geocode/v1/json?q=${coordinates.latitude}+${coordinates.longitude}&key=${apiKey}`;
 
-  return axios.get(url).then(data => console.log(data));
+  axios
+    .get(url)
+    .then(response => {
+      return response.data.results[0].components.city;
+    })
+    .then(location => {
+      defaultReqWeather(location);
+      setBackground(location);
+    });
+}
+
+function setBackground(location) {
+  backgroundImageService.query = location;
+  backgroundImageService.makeQuery().then(setBackgroundImage);
 }
