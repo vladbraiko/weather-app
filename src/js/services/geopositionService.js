@@ -13,10 +13,18 @@ function success(position) {
   axios
     .get(url)
     .then(response => {
-      return response.data.results[0].components.city;
+      return response.data.results[0].geometry;
     })
     .then(location => {
       defaultReqWeather(location);
+    });
+
+  axios
+    .get(url)
+    .then(response => {
+      return response.data.results[0].components.city;
+    })
+    .then(location => {
       setBackground(location);
     });
 }

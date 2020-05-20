@@ -155,7 +155,6 @@ const dataHandling = (days, OWMData) => {
     oneDayData.sunset = new Date(OWMData.sys.sunset * 1000);
 
     renderOneDayWeather(oneDayData);
-    console.log(oneDayData);
   }
   if (days == 'five') {
     fiveDayData.city = OWMData.city.name;
@@ -255,17 +254,37 @@ function handleBtnMIClick(event) {
   }
 }
 
+// Получаем правильную ссылку по GEO
+function GetOWM_GEO_Request(RequestType, lat, lng) {
+  const OWM = 'https://api.openweathermap.org/data/2.5/';
+  const apiKey = '48f3906fa74131a752b29b56bb64ec12';
+  return OWM + RequestType + '?lat=' + lat + '&lon=' + lng + '&appid=' + apiKey;
+}
+
 // Делаем запрос по умолчанию
-const defaultReqWeather = searchName => {
-  searchName = searchName || 'Kyiv';
+const defaultReqWeather = location => {
+  if (location) {
+    const lat = location.lat.toFixed(2);
+    const lng = location.lng.toFixed(2);
+    // Получаем данные за один день и записываем в наш обьект
+    req = GetOWM_GEO_Request('weather', lat, lng);
+    getWeatherData(req).then(data => dataHandling('one', data));
 
-  // Получаем данные за один день и записываем в наш обьект
-  req = GetOWM_Request('weather', searchName);
-  getWeatherData(req).then(data => dataHandling('one', data));
+    // Получаем данные за 5 дней и записываем в наш обьект
+    req = GetOWM_GEO_Request('forecast', lat, lng);
+    getWeatherData(req).then(data => dataHandling('five', data));
+    console.log(location);
+  } else {
+    searchName = 'Kyiv';
 
-  // Получаем данные за 5 дней и записываем в наш обьект
-  req = GetOWM_Request('forecast', searchName);
-  getWeatherData(req).then(data => dataHandling('five', data));
+    // Получаем данные за один день и записываем в наш обьект
+    req = GetOWM_Request('weather', searchName);
+    getWeatherData(req).then(data => dataHandling('one', data));
+
+    // Получаем данные за 5 дней и записываем в наш обьект
+    req = GetOWM_Request('forecast', searchName);
+    getWeatherData(req).then(data => dataHandling('five', data));
+  }
 };
 
 defaultReqWeather();
