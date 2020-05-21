@@ -76,11 +76,14 @@
     font-family: 'Lato';
     color: #ffffff;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 
   &__img {
     margin: 0 auto;
+    height: 40px;
+    width: 40px;
+    padding: 0;
   }
 
   &__temperature-block {
