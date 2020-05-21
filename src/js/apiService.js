@@ -3,9 +3,9 @@ const form = document.querySelector('.search-location__form');
 const btnToday = document.querySelector('.btn-today-js');
 const btnFiveDays = document.querySelector('.btn-5-days-js');
 const btnOneDay = document.querySelector('.btn-today-js');
-const contentBox = document.querySelector('.content-box');
+const contentBox = document.querySelector('.today-box');
 const btnBox = document.querySelector('.btn-box');
-const part2 = document.querySelector('.part2');
+const part2 = document.querySelector('.today-section');
 const part3 = document.querySelector('.part3');
 const part5 = document.querySelector('.five-days-containeer');
 const part6 = document.querySelector('.moreInfo');
@@ -13,7 +13,7 @@ const dateSunriseTime = document.querySelector('.date__sunrise--time');
 const dateSunsetTime = document.querySelector('.date__sunset--time');
 const daysFiveListblock = document.querySelector('.days-list');
 const moreInfoBlock = document.querySelector('.moreInfo__block');
-const part2City = document.querySelector('.part2-city');
+const part2City = document.querySelector('.today-city');
 const fiveDaysContaineerCityName = document.querySelector(
   '.five-days-containeer__city-name',
 );
@@ -59,10 +59,10 @@ const renderOneDayWeather = data => {
     btnToday.style.backgroundColor = '#f7f7f7';
     btnFiveDays.removeAttribute('style');
     part2City.removeAttribute('style');
-    part2.classList.add('part2');
-    part2.classList.remove('part2-fiveday');
-    contentBox.classList.add('content-box');
-    contentBox.classList.remove('content-box-fiveday');
+    part2.classList.add('today-section');
+    part2.classList.remove('today-section-fiveday');
+    contentBox.classList.add('today-box');
+    contentBox.classList.remove('today-box-fiveday');
     part2City.style.display = 'none';
     part2City.classList.remove('display-block');
   } else {
@@ -83,10 +83,10 @@ const renderFiveDaysWeather = data => {
     part2City.textContent = fiveDayData.city + ', ' + fiveDayData.countryCode;
     fiveDaysContaineerCityName.textContent =
       fiveDayData.city + ', ' + fiveDayData.countryCode;
-    part2.classList.remove('part2');
-    part2.classList.add('part2-fiveday');
-    contentBox.classList.remove('content-box');
-    contentBox.classList.add('content-box-fiveday');
+    part2.classList.remove('today-section');
+    part2.classList.add('today-section-fiveday');
+    contentBox.classList.remove('today-box');
+    contentBox.classList.add('today-box-fiveday');
   }
   const daysListItem = document.querySelectorAll('.days-list__item');
   if (daysListItem) {
