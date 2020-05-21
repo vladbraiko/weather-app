@@ -38,7 +38,7 @@
       font-family: $main-font;
 
       &::placeholder {
-        color: #00000062;
+        color: $main-black-color;
         font-size: 14px;
       }
     }
@@ -46,11 +46,6 @@
     &-btn {
       fill: #000000;
       opacity: 0.471;
-      background-color: $main-white-color;
-      background-image: url(img/star-regular.svg);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: 19px 21px;
       border: none;
       width: 20px;
       height: 20px;
@@ -58,6 +53,11 @@
       border-radius: 50%;
       cursor: pointer;
       padding: 0;
+      transition: fill 200ms linear;
+    }
+
+    &-btn-focus {
+      fill: $focus-color;
     }
   }
 
@@ -68,22 +68,27 @@
 
     &-btnPrev,
     &-btnNext {
+      opacity: 0.471;
       width: 28px;
       height: 28px;
-      background-color: transparent;
+      background-color: #ffffff;
       border-radius: 50%;
       border: none;
       cursor: pointer;
       padding: 0;
+      transition: opacity 200ms linear;
+      outline: none;
 
-      & svg {
-        fill: #ffffff;
-        opacity: 0.471;
-        transition: opacity 200ms linear;
+      &:hover,
+      &:hover svg {
+        opacity: 1;
       }
 
-      & svg:hover {
-        opacity: 1;
+      & svg {
+        fill: #000000;
+        transition: opacity 200ms linear;
+        width: 80%;
+        height: 80%;
       }
     }
 
@@ -92,9 +97,10 @@
       margin: 0;
       padding: 0;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-evenly;
       width: 178px;
     }
+
     &-list svg {
       display: block;
       height: 100%;
@@ -162,7 +168,8 @@
     }
 
     .search-location__slider-list {
-      // width: 375px;
+      width: 380px;
+      justify-content: space-evenly;
     }
   }
 }

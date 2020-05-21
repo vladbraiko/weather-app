@@ -144,6 +144,15 @@ const monthNow = data => {
   return month[data];
 };
 
+const get12HourData = data => {
+  data.setMilliseconds(0);
+  data.setSeconds(0);
+  data.setMinutes(0);
+  data.setHours(12);
+  const dayData = fiveDayData.list.find(e => e.dt == data.getTime() / 1000);
+  return dayData;
+};
+
 const dataHandling = (days, OWMData) => {
   if (days == 'one') {
     oneDayData.temp = Math.floor(OWMData.main.temp - 273.15);
@@ -153,9 +162,13 @@ const dataHandling = (days, OWMData) => {
     oneDayData.countryCode = OWMData.sys.country;
     oneDayData.sunrise = new Date(OWMData.sys.sunrise * 1000);
     oneDayData.sunset = new Date(OWMData.sys.sunset * 1000);
+    oneDayData.icon =
+      'http://openweathermap.org/img/wn/' + OWMData.weather[0].icon + '.png';
+    oneDayData.iconDescription = OWMData.weather[0].description;
+    // console.log(OWMData);
+    // console.log(oneDayData);
 
     renderOneDayWeather(oneDayData);
-    console.log(oneDayData);
   }
   if (days == 'five') {
     fiveDayData.city = OWMData.city.name;
@@ -170,6 +183,16 @@ const dataHandling = (days, OWMData) => {
         daysList.DayNum = dataTime.getDate();
         daysList.Day = weekDayNow(dataTime.getDay());
         daysList.Month = monthNow(dataTime.getMonth());
+        const getIcon = get12HourData(dataTime);
+        if (getIcon) {
+          daysList.icon =
+            'http://openweathermap.org/img/wn/' +
+            getIcon.weather[0].icon +
+            '.png';
+          daysList.iconDescription = getIcon.weather[0].description;
+        }
+
+        // daysList.icon = getIcon.weather.icon;
         fiveDayData.days.push(daysList);
       }
     });
@@ -240,6 +263,9 @@ const renderMoreInfo = target => {
         obj.humidity = e.main.humidity;
         obj.pressure = e.main.pressure;
         obj.speed = e.wind.speed.toFixed(1);
+        obj.icon =
+          'http://openweathermap.org/img/wn/' + e.weather[0].icon + '.png';
+        obj.iconDescription = e.weather[0].description;
         moreInfoArr.push(obj);
       });
       moreInfoBlock.innerHTML += moreInfoTemp(moreInfoArr);
@@ -253,22 +279,55 @@ function handleBtnMIClick(event) {
   if (target.nodeName == 'BUTTON') {
     renderMoreInfo(target);
   }
-
 }
 
-
+// Получаем правильную ссылку по GEO
+// function GetOWM_GEO_Request(RequestType, lat, lng) {
+//   const OWM = 'https://api.openweathermap.org/data/2.5/';
+//   const apiKey = '48f3906fa74131a752b29b56bb64ec12';
+//   return OWM + RequestType + '?lat=' + lat + '&lon=' + lng + '&appid=' + apiKey;
+// }
 
 // Делаем запрос по умолчанию
-const defaultReqWeather = () => {
-  searchName = 'Kyiv';
+// const defaultReqWeather = location => {
+//   if (location) {
+//     const lat = location.lat.toFixed(2);
+//     const lng = location.lng.toFixed(2);
+//     // Получаем данные за один день и записываем в наш обьект
+//     req = GetOWM_GEO_Request('weather', lat, lng);
+//     getWeatherData(req).then(data => dataHandling('one', data));
 
-  // Получаем данные за один день и записываем в наш обьект
+//     // Получаем данные за 5 дней и записываем в наш обьект
+//     req = GetOWM_GEO_Request('forecast', lat, lng);
+//     getWeatherData(req).then(data => dataHandling('five', data));
+//     console.log(location);
+//   } else {
+//     searchName = 'Kyiv';
+
+//     // Получаем данные за один день и записываем в наш обьект
+//     req = GetOWM_Request('weather', searchName);
+//     getWeatherData(req).then(data => dataHandling('one', data));
+
+//     // Получаем данные за 5 дней и записываем в наш обьект
+//     req = GetOWM_Request('forecast', searchName);
+//     getWeatherData(req).then(data => dataHandling('five', data));
+//   }
+// };
+
+// defaultReqWeather();
+
+// export { defaultReqWeather };
+
+const defaultReqWeather = searchName => {
+  searchName = searchName || 'Kyiv';
+
   req = GetOWM_Request('weather', searchName);
   getWeatherData(req).then(data => dataHandling('one', data));
 
-  // Получаем данные за 5 дней и записываем в наш обьект
   req = GetOWM_Request('forecast', searchName);
   getWeatherData(req).then(data => dataHandling('five', data));
 };
 
 defaultReqWeather();
+
+export { defaultReqWeather };

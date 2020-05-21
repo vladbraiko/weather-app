@@ -28,3 +28,5 @@ function setBackgroundImage(backgroundImages) {
   url('${backgroundImages[6].largeImageURL}') center; background-size: cover;`;
   }
 }
+
+export { setBackgroundImage };
