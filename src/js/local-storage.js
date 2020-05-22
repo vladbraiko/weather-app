@@ -1,12 +1,17 @@
 import refs from './refs.js';
 import storage from './cityService.js';
 import updateButtons from '../template/favorite-cities.hbs';
+import Siema from 'siema';
+
+//
 
 createButtons(getLocalStorage());
+createSiema();
 
 refs.addToLocalStorageBtn.addEventListener('click', () => {
   addToLocalStorage();
   createButtons(getLocalStorage());
+  createSiema();
 });
 
 //
@@ -53,4 +58,23 @@ function getLocalStorage() {
   storage.favoriteCities = parsedCities;
 
   return parsedCities;
+}
+
+function createSiema() {
+  const mySiema = new Siema({
+    selector: refs.listOfButtons,
+    perPage: 2,
+    draggable: false,
+    multipleDrag: false,
+  });
+
+  refs.btnPrev.addEventListener('click', () => mySiema.prev());
+  refs.btnNext.addEventListener('click', () => mySiema.next());
+
+  refs.listOfButtons.addEventListener('click', event => {
+    if (event.target.nodeName === 'path') {
+      const numberOfTarget = mySiema.currentSlide;
+      mySiema.remove(numberOfTarget);
+    }
+  });
 }
