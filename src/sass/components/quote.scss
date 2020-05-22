@@ -1,8 +1,17 @@
 .quote {
+  position: relative;
   text-align: -webkit-right;
   font-family: $main-font;
   color: $main-white-color;
   padding: 0 20px;
+  &__quotes {
+    position: absolute;
+    top: -30px;
+    right: 20px;
+    font-size: 90px;
+    opacity: 0.4;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  }
 
   &__text {
     width: 205px;
@@ -18,7 +27,11 @@
 @media (min-width: 768px) {
   .quote {
     padding-right: 140px;
-
+    &__quotes {
+      font-size: 195px;
+      top: -80px;
+      right: 134px;
+    }
     &__text {
       width: 375px;
       margin-bottom: 30px;
@@ -26,12 +39,16 @@
   }
 }
 
-@media screen and (min-width: 1120px) {
+@media screen and (min-width: 1280px) {
   .quote {
-    // margin-right: 5%;
-    // margin-top: 5%;
-    padding: 0;
-    margin-bottom: 5%;
+    padding: 40px 110px 0px 0px;
+    margin: 0px;
+    &__quotes {
+      font-size: 195px;
+      top: -34px;
+      right: 106px;
+    }
+
     &__text {
       font-size: 22px;
     }
