@@ -63,9 +63,16 @@ function getLocalStorage() {
 function createSiema() {
   const mySiema = new Siema({
     selector: refs.listOfButtons,
-    perPage: 2,
-    draggable: false,
-    multipleDrag: false,
+    perPage: { 
+    279: 2,
+    767: 4,
+    1119: 4,
+  },
+  duration: 200,
+  draggable: false,
+  multipleDrag: false,
+  threshold: 20,
+  loop: false,
   });
 
   refs.btnPrev.addEventListener('click', () => mySiema.prev());
