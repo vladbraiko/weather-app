@@ -96,8 +96,6 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: space-evenly;
       width: 178px;
     }
 
@@ -115,6 +113,7 @@
       padding: 5px 5px 5px 10px;
       transition: opacity 200ms linear;
     }
+
     &-list-item:hover,
     &-list-item:focus {
       opacity: 1;
