@@ -4,7 +4,7 @@
 }
 
 .search-location {
-  margin-bottom: 50px;
+  margin: 0 auto 50px;
   width: 280px;
 
   &__form {
@@ -143,7 +143,7 @@
       margin-bottom: 1px;
     }
 
-    &-list-content-renove-city-button {
+    &-list-content-renove-city__button {
       background-color: transparent;
       border: none;
       color: $main-white-color;

@@ -1,3 +1,12 @@
+.data-quote-container {
+  @media screen and (min-width: 1280px) {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-left: -110px;
+  }
+}
+
 .date-container {
   width: 280px;
   height: 190px;
@@ -47,7 +56,8 @@
 .date__month {
   text-align: right;
 }
-.date__month::after, .date__sunrise--time::after {
+.date__month::after,
+.date__sunrise--time::after {
   content: '';
   position: absolute;
   width: 1px;
@@ -87,13 +97,12 @@
   width: 26px;
   height: 34px;
 }
- 
+
 @media screen and (min-width: 768px) {
   .date-container {
     width: 490px;
     height: 277px;
     padding-top: 36px;
-    
   }
   .date__day {
     font-size: 90px;
@@ -121,7 +130,8 @@
   .date__sun {
     width: 194px;
   }
-  .date__month::after, .date__sunrise--time::after {
+  .date__month::after,
+  .date__sunrise--time::after {
     margin-left: 15px;
   }
   .date__sunrise,

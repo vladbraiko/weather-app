@@ -12,6 +12,7 @@
     opacity: 0.4;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   }
+
   &__text {
     width: 205px;
     margin-bottom: 14px;
@@ -41,14 +42,13 @@
 @media screen and (min-width: 1280px) {
   .quote {
     padding: 40px 110px 0px 0px;
-    // margin-right: 5%;
-    // margin-top: 5%;
     margin: 0px;
     &__quotes {
       font-size: 195px;
       top: -34px;
       right: 106px;
     }
+
     &__text {
       font-size: 22px;
     }

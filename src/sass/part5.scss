@@ -1,5 +1,5 @@
 .five-days-containeer {
-  display: none;
+  // display: none;
   margin: 0 auto;
   border-radius: 35px;
   background-color: rgba(16, 33, 54, 0.8);
@@ -8,14 +8,13 @@
   height: 270px;
   padding: 30px 30px 0px;
 
-
   &__city-name {
     font-size: 18px;
     font-family: 'Lato';
     color: rgb(255, 255, 255);
     font-weight: bold;
     text-align: center;
-    margin: 0px auto 14px;
+    margin: 0px auto 10px;
   }
 
   &__scroll {
@@ -42,9 +41,8 @@
 .days-list {
   display: flex;
   justify-content: space-between;
-  height: 145px;
-  // padding: 0 30px;
-  margin-bottom: 18px;
+  height: 165px;
+  margin-bottom: 13px;
   list-style: none;
   overflow-x: auto;
 
@@ -55,7 +53,6 @@
   &__item {
     list-style: none;
     width: 55px;
-    height: 145px;
 
     &:not(:last-child) {
       margin-right: 25px;
@@ -79,13 +76,14 @@
     font-family: 'Lato';
     color: #ffffff;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 
   &__img {
-    width: 42px;
-    height: 22px;
-    margin: 0 auto 15px;
+    margin: 0 auto;
+    height: 40px;
+    width: 40px;
+    padding: 0;
   }
 
   &__temperature-block {
@@ -113,7 +111,6 @@
     font-family: 'Lato';
     color: rgb(255, 107, 8);
     font-weight: bold;
-    line-height: 0.75;
     text-align: justify;
     vertical-align: top;
     margin: 0;
@@ -192,12 +189,12 @@
 
   .days-list {
     height: 170px;
-    // padding: 0 36px;
 
     &__item {
       width: 75px;
-      height: 170px;
-      margin-right: 0px;
+      &:not(:last-child) {
+        margin-right: 0px;
+      }
     }
 
     &__day-of-the-week {
@@ -211,7 +208,7 @@
 
     &__temperature-block {
       width: 75px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     &__min-max {
@@ -264,12 +261,12 @@
 
   .days-list {
     height: 230px;
-    // padding: 0 100px;
 
     &__item {
       width: 105px;
-      height: 230px;
-      margin-right: 0px;
+      &:not(:last-child) {
+        margin-right: 0px;
+      }
     }
 
     &__day-of-the-week {
@@ -279,16 +276,17 @@
 
     &__date {
       font-size: 25px;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
     }
 
     &__img {
-      margin: 0 auto 35px;
+      margin: 0 auto 15px;
     }
 
     &__temperature-block {
-      width: 103px;
-      margin-bottom: 18px;
+      width: 105px;
+      margin-bottom: 17px;
+      height: 55px;
     }
 
     &__min-max {
@@ -317,7 +315,22 @@
   }
 }
 
-.tmp-cloud-icon {
-  background: url(img/icons/cloud.png);
-  display: block;
+.five-days-container_btn-box {
+  width: 280px;
+  margin: 0 auto 25px;
+  @media (min-width: 768px) and (max-width: 1279px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+  }
+
+  @media (min-width: 1280px) {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-bottom: 30px;
+    width: 100%;
+  }
 }

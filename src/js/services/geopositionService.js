@@ -13,23 +13,22 @@ function success(position) {
   axios
     .get(url)
     .then(response => {
-      return response.data.results[0].geometry;
+      return response.data.results[0].components.city
+        ? response.data.results[0].components.city
+        : response.data.results[0].components.village;
     })
     .then(location => {
       defaultReqWeather(location);
-    });
-
-  axios
-    .get(url)
-    .then(response => {
-      return response.data.results[0].components.city;
-    })
-    .then(location => {
       setBackground(location);
     });
 }
 
 function setBackground(location) {
   backgroundImageService.query = location;
-  backgroundImageService.makeQuery().then(setBackgroundImage);
+  backgroundImageService
+    .makeQuery()
+    .then(setBackgroundImage)
+    .catch(() => {
+      backgroundImageService.makeReserveQuery().then(setBackgroundImage);
+    });
 }
