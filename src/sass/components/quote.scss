@@ -3,7 +3,7 @@
   font-family: $main-font;
   color: $main-white-color;
   padding: 0 20px;
-  
+
   &__text {
     width: 205px;
     margin-bottom: 14px;
@@ -17,7 +17,6 @@
 
 @media (min-width: 768px) {
   .quote {
-    
     padding-right: 140px;
 
     &__text {
@@ -29,8 +28,10 @@
 
 @media screen and (min-width: 1120px) {
   .quote {
-    margin-right: 5%;
-    margin-top: 5%;
+    // margin-right: 5%;
+    // margin-top: 5%;
+    padding: 0;
+    margin-bottom: 5%;
     &__text {
       font-size: 22px;
     }

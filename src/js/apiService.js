@@ -1,12 +1,8 @@
 // DOM переменные
 const form = document.querySelector('.search-location__form');
-const btnToday = document.querySelector('.btn-today-js');
-const btnFiveDays = document.querySelector('.btn-5-days-js');
-const btnOneDay = document.querySelector('.btn-today-js');
+const btnFiveDays = document.querySelectorAll('.btn-5-days-js');
+const btnOneDay = document.querySelectorAll('.btn-today-js');
 const contentBox = document.querySelector('.today-box');
-const btnBox = document.querySelector('.btn-box');
-const part2 = document.querySelector('.today-section');
-const part3 = document.querySelector('.part3');
 const part5 = document.querySelector('.five-days-containeer');
 const part6 = document.querySelector('.moreInfo');
 const dateSunriseTime = document.querySelector('.date__sunrise--time');
@@ -17,6 +13,8 @@ const part2City = document.querySelector('.today-city');
 const fiveDaysContaineerCityName = document.querySelector(
   '.five-days-containeer__city-name',
 );
+const todayContainer = document.querySelector('.today-container');
+const fiveDaysContainer = document.querySelector('.five-days-container');
 
 // Переменные для обработки погоды
 let searchName = '';
@@ -50,21 +48,8 @@ const renderOneDayWeather = data => {
   if (!document.querySelector('.temperature-box')) {
     contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
     renderSunTime(oneDayData.sunrise, oneDayData.sunset);
-    part2.style.display = 'flex';
-    part3.style.display = 'flex';
-    part5.style.display = 'none';
-    part5.style.borderRadius = '35px';
-    part6.style.display = 'none';
-    btnBox.style.display = 'block';
-    btnToday.style.backgroundColor = '#f7f7f7';
-    btnFiveDays.removeAttribute('style');
-    part2City.removeAttribute('style');
-    part2.classList.add('today-section');
-    part2.classList.remove('today-section-fiveday');
-    contentBox.classList.add('today-box');
-    contentBox.classList.remove('today-box-fiveday');
-    part2City.style.display = 'none';
-    part2City.classList.remove('display-block');
+    todayContainer.classList.remove('isHiden');
+    fiveDaysContainer.classList.add('isHiden');
   } else {
     document.querySelector('.temperature-box').remove();
     contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
@@ -76,24 +61,16 @@ const renderOneDayWeather = data => {
 const renderFiveDaysWeather = data => {
   if (document.querySelector('.temperature-box')) {
     document.querySelector('.temperature-box').remove();
-    btnToday.removeAttribute('style');
-    btnFiveDays.style.backgroundColor = '#f7f7f7';
-    part2City.removeAttribute('style');
-    part2City.classList.add('display-block');
+    todayContainer.classList.add('isHiden');
+    fiveDaysContainer.classList.remove('isHiden');
     part2City.textContent = fiveDayData.city + ', ' + fiveDayData.countryCode;
     fiveDaysContaineerCityName.textContent =
       fiveDayData.city + ', ' + fiveDayData.countryCode;
-    part2.classList.remove('today-section');
-    part2.classList.add('today-section-fiveday');
-    contentBox.classList.remove('today-box');
-    contentBox.classList.add('today-box-fiveday');
   }
   const daysListItem = document.querySelectorAll('.days-list__item');
   if (daysListItem) {
     daysListItem.forEach(e => e.remove());
   }
-  part3.style.display = 'none';
-  part5.style.display = 'block';
   daysFiveListblock.innerHTML += fiveDayTemp(data);
 };
 
@@ -165,8 +142,6 @@ const dataHandling = (days, OWMData) => {
     oneDayData.icon =
       'http://openweathermap.org/img/wn/' + OWMData.weather[0].icon + '.png';
     oneDayData.iconDescription = OWMData.weather[0].description;
-    // console.log(OWMData);
-    // console.log(oneDayData);
 
     renderOneDayWeather(oneDayData);
   }
@@ -192,7 +167,6 @@ const dataHandling = (days, OWMData) => {
           daysList.iconDescription = getIcon.weather[0].description;
         }
 
-        // daysList.icon = getIcon.weather.icon;
         fiveDayData.days.push(daysList);
       }
     });
@@ -237,9 +211,15 @@ form.addEventListener('submit', function (e) {
 });
 
 // Слушаем кнопку Today
-btnOneDay.addEventListener('click', () => renderOneDayWeather(oneDayData));
+btnOneDay[0].addEventListener('click', () => renderOneDayWeather(oneDayData));
+btnOneDay[1].addEventListener('click', () => renderOneDayWeather(oneDayData));
 // Слушаем кнопку 5 Days
-btnFiveDays.addEventListener('click', () => renderFiveDaysWeather(fiveDayData));
+btnFiveDays[0].addEventListener('click', () =>
+  renderFiveDaysWeather(fiveDayData),
+);
+btnFiveDays[1].addEventListener('click', () =>
+  renderFiveDaysWeather(fiveDayData),
+);
 // Слушаем кнопку more info
 daysFiveListblock.addEventListener('click', handleBtnMIClick);
 
@@ -280,43 +260,6 @@ function handleBtnMIClick(event) {
     renderMoreInfo(target);
   }
 }
-
-// Получаем правильную ссылку по GEO
-// function GetOWM_GEO_Request(RequestType, lat, lng) {
-//   const OWM = 'https://api.openweathermap.org/data/2.5/';
-//   const apiKey = '48f3906fa74131a752b29b56bb64ec12';
-//   return OWM + RequestType + '?lat=' + lat + '&lon=' + lng + '&appid=' + apiKey;
-// }
-
-// Делаем запрос по умолчанию
-// const defaultReqWeather = location => {
-//   if (location) {
-//     const lat = location.lat.toFixed(2);
-//     const lng = location.lng.toFixed(2);
-//     // Получаем данные за один день и записываем в наш обьект
-//     req = GetOWM_GEO_Request('weather', lat, lng);
-//     getWeatherData(req).then(data => dataHandling('one', data));
-
-//     // Получаем данные за 5 дней и записываем в наш обьект
-//     req = GetOWM_GEO_Request('forecast', lat, lng);
-//     getWeatherData(req).then(data => dataHandling('five', data));
-//     console.log(location);
-//   } else {
-//     searchName = 'Kyiv';
-
-//     // Получаем данные за один день и записываем в наш обьект
-//     req = GetOWM_Request('weather', searchName);
-//     getWeatherData(req).then(data => dataHandling('one', data));
-
-//     // Получаем данные за 5 дней и записываем в наш обьект
-//     req = GetOWM_Request('forecast', searchName);
-//     getWeatherData(req).then(data => dataHandling('five', data));
-//   }
-// };
-
-// defaultReqWeather();
-
-// export { defaultReqWeather };
 
 const defaultReqWeather = searchName => {
   searchName = searchName || 'Kyiv';
