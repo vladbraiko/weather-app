@@ -1,7 +1,3 @@
-.display-none {
-  display: none;
-}
-
 .display-block {
   display: block;
   @media screen and (min-width: 320px) and (max-width: 767px) {
@@ -9,9 +5,18 @@
   }
 }
 
-.part2 {
-  display: none;
+.today-section {
+  display: flex;
   justify-content: center;
+  margin-bottom: 30px;
+  font-family: $main-font;
+
+  @media screen and (min-width: 768px) and (max-width: 1279px) {
+    margin-bottom: 48px;
+  }
+  @media screen and (min-width: 1280px) {
+    margin: 0 -120px 57px 0;
+  }
 
   &-fiveday {
     justify-content: center;
@@ -31,8 +36,8 @@
   }
 }
 
-.part2-city {
-  font-family: Lato;
+.today-city {
+  display: none;
   font-size: 28px;
   line-height: 22px;
   font-weight: 700;
@@ -40,14 +45,15 @@
   color: #ffffff;
   @media screen and (min-width: 1280px) {
     margin-right: 20%;
+    display: block;
   }
   @media screen and (min-width: 768px) and (max-width: 1279px) {
     margin: 30px 0;
+    display: block;
   }
 }
 
-.content-box {
-  margin-bottom: 30px;
+.today-box {
   text-align: center;
   width: 280px;
 
@@ -62,27 +68,25 @@
   }
   @media screen and (min-width: 768px) and (max-width: 1279px) {
     width: 480px;
-    margin-bottom: 48px;
   }
   @media screen and (min-width: 1280px) {
     width: 490px;
-    margin-bottom: 100px;
   }
 }
 
 .temperature-box {
   margin-bottom: 30px;
-  padding: 38px 60px;
+  padding: 30px 60px;
   border-radius: 35px;
   background-color: rgba(16, 33, 54, 0.59);
   color: rgb(88, 100, 115);
 
   @media screen and (min-width: 768px) and (max-width: 1279px) {
-    padding: 38px 186px;
+    padding: 30px 170px;
     margin-bottom: 48px;
   }
   @media screen and (min-width: 1280px) {
-    padding: 38px 190px;
+    padding: 30px 170px;
     margin-bottom: 30px;
   }
 }
@@ -91,13 +95,20 @@
   transition: 200ms linear;
   background-color: rgb(16, 33, 54);
 }
+.days-list__img {
+  margin-bottom: 16px;
 
+  @media screen and (min-width: 768px) {
+    margin-bottom: 8px;
+  }
+}
 .temperature-header {
-  padding: 16px 0;
+  margin-bottom: 16px;
   text-transform: capitalize;
   font-size: 16px;
+
   @media screen and (min-width: 768px) {
-    padding: 8px 0;
+    margin-bottom: 8px;
     font-size: 18px;
   }
 }
@@ -119,6 +130,7 @@
   color: rgb(255, 255, 255);
   @media screen and (min-width: 768px) {
     font-size: 90px;
+    font-weight: 300;
   }
 }
 
@@ -128,39 +140,64 @@
 }
 
 .degree-list {
+  align-items: center;
+  justify-content: space-between;
   text-align: justify;
   width: 50%;
   @media screen and (min-width: 768px) {
     width: 100%;
+    justify-content: space-around;
+  }
+  @media screen and (min-width: 1280px) {
+    justify-content: space-evenly;
   }
 }
 
 .degree-item {
   color: rgb(255, 255, 255);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  @media screen and (min-width: 768px) {
-    justify-content: flex-start;
-    align-items: start;
-  }
 }
+
 .degree-first-subtitle {
   color: rgb(88, 100, 115);
   font-size: 14px;
+  position: relative;
   @media screen and (min-width: 768px) {
     font-size: 18px;
   }
 }
+
+// .degree-item--line {
+//   position: relative;
+// }
+// .degree-item--line::before {
+//   content: '';
+//   position: absolute;
+//   width: 1px;
+//   height: 32px;
+//   background-color: rgb(88, 100, 115);
+//   margin-left: 36px;
+//   top: 10%;
+//   @media screen and (min-width: 768px) {
+//     height: 40px;
+//     margin-left: 61px;
+//   }
+//   @media screen and (min-width: 1280px) {
+//     margin-left: 55px;
+//   }
+// }
+
+.degree-item--line {
+  width: 1px;
+  height: 32px;
+  background-color: rgb(88, 100, 115);
+  @media screen and (min-width: 768px) {
+    height: 40px;
+    margin-top: 10px;
+  }
+}
+
 .degree-second-subtitle {
   font-size: 18px;
-}
-.degree-item--line {
-  border-right: 1px solid rgb(88, 100, 115);
-  padding-right: 11px;
-  @media screen and (min-width: 768px) {
-    padding-right: 26px;
-  }
 }
 
 .btn-list {
@@ -171,8 +208,9 @@
 }
 
 .btn {
-  padding: 6px 38px;
+  padding: 6px 36px;
   font-size: 14px;
+  font-weight: 700;
   border-radius: 14px;
   background-color: rgba(247, 247, 247, 0.59);
   text-transform: uppercase;
@@ -180,12 +218,24 @@
   outline: none;
 }
 .btn-today {
+  background-color: #f7f7f7;
   @media screen and (min-width: 768px) and (max-width: 1279px) {
     margin-right: 24px;
   }
 
   @media screen and (min-width: 1280px) {
     margin-right: 16px;
+  }
+}
+
+.btn-fivedays {
+  background-color: #f7f7f7;
+  @media screen and (min-width: 768px) and (max-width: 1279px) {
+    margin-left: 24px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    margin-left: 16px;
   }
 }
 
@@ -197,8 +247,4 @@
 
 .weather-picture-icon {
   margin: 0 auto;
-}
-
-.btn-box {
-  display: none;
 }

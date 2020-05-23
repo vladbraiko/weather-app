@@ -1,17 +1,11 @@
-.part1 {
-  display: flex;
-  justify-content: center;
-}
-
 .search-location {
-  margin-bottom: 50px;
+  margin: 0 auto 50px;
   width: 280px;
 
   &__form {
     background-color: $main-white-color;
     padding: 14px 24px;
-    display: flex;
-    justify-content: space-between;
+    position: relative;
     align-items: center;
     border-radius: 30px;
     border: 1px solid $main-white-color;
@@ -25,11 +19,12 @@
       background-size: contain;
       width: 22px;
       height: 22px;
-      margin-right: 12px;
+      position: absolute;
     }
 
     input {
       border: none;
+     padding-left: 34px;
       color: $main-black-color;
       font-size: 14px;
       font-weight: 400;
@@ -45,6 +40,10 @@
 
     &-btn {
       fill: #000000;
+      position: absolute;
+      top: 50%;
+      right: 22px;
+      transform: translateY(-50%);
       opacity: 0.471;
       border: none;
       width: 20px;
@@ -55,6 +54,7 @@
       padding: 0;
       transition: fill 200ms linear;
     }
+  
 
     &-btn-focus {
       fill: $focus-color;
@@ -96,8 +96,6 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: space-evenly;
       width: 178px;
     }
 
@@ -115,6 +113,7 @@
       padding: 5px 5px 5px 10px;
       transition: opacity 200ms linear;
     }
+
     &-list-item:hover,
     &-list-item:focus {
       opacity: 1;
@@ -143,7 +142,7 @@
       margin-bottom: 1px;
     }
 
-    &-list-content-renove-city-button {
+    &-list-content-renove-city__button {
       background-color: transparent;
       border: none;
       color: $main-white-color;
