@@ -3,7 +3,6 @@ const form = document.querySelector('.search-location__form');
 const btnFiveDays = document.querySelectorAll('.btn-5-days-js');
 const btnOneDay = document.querySelectorAll('.btn-today-js');
 const contentBox = document.querySelector('.today-box');
-const part5 = document.querySelector('.five-days-containeer');
 const part6 = document.querySelector('.moreInfo');
 const dateSunriseTime = document.querySelector('.date__sunrise--time');
 const dateSunsetTime = document.querySelector('.date__sunset--time');
@@ -21,6 +20,7 @@ let location = '';
 let req = '';
 let oneDayData = {};
 let fiveDayData = {};
+let moreInfoData = {};
 
 // Шаблоны
 import oneDayTemp from '../template/oneday.hbs';
@@ -94,6 +94,19 @@ const renderFiveDaysWeather = data => {
   daysFiveListblock.innerHTML += fiveDayTemp(data);
 };
 
+// Рендерим more info
+const renderMoreInfo = target => {
+  part6.classList.remove('isHiden');
+  const day = Number(target.dataset.day);
+  const moreDaysListItem = document.querySelectorAll('.timeWeather');
+  if (moreDaysListItem) {
+    moreDaysListItem.forEach(e => e.remove());
+  }
+  const currentMoreInfo = moreInfoData.find(e => e.DayNum == day);
+  moreInfoBlock.innerHTML += moreInfoTemp(currentMoreInfo.forecast);
+  console.log(currentMoreInfo);
+};
+
 // Получаем день недели
 const weekDayNow = data => {
   const date = new Date(data * 1000).getDay();
@@ -127,24 +140,32 @@ const monthNow = data => {
   return month[date];
 };
 
-// Получаем обьект с датой 12 часов и возвращаем icon data
-const get12HourDataIcon = data => {
+// Получаем обьект icon data
+const getIconData = data => {
   const date = new Date(data[0].dt * 1000);
   date.setMilliseconds(0);
   date.setSeconds(0);
   date.setMinutes(0);
   date.setHours(12);
-  data = data.find(e => e.dt == date.getTime() / 1000);
-  if (data) {
-    const weather = data.weather[0];
+  const getTimeObj = data.find(e => e.dt == date.getTime() / 1000);
+  const iconInfo = {};
+  if (getTimeObj) {
+    const weather = getTimeObj.weather[0];
     const icon = 'http://openweathermap.org/img/wn/' + weather.icon + '.png';
-    const iconInfo = {
-      icon: icon,
-      iconDescription: weather.description,
-    };
+    iconInfo.icon = icon;
+    iconInfo.iconDescription = weather.description;
     return iconInfo;
   } else {
-    return 'false';
+    let weather = {};
+    if (data[3]) {
+      weather = data[3].weather[0];
+    } else {
+      weather = data[0].weather[0];
+    }
+    const icon = 'http://openweathermap.org/img/wn/' + weather.icon + '.png';
+    iconInfo.icon = icon;
+    iconInfo.iconDescription = weather.description;
+    return iconInfo;
   }
 };
 
@@ -171,15 +192,13 @@ const mappingData = response => {
       Day: weekDayNow(element[0].dt),
       Month: monthNow(element[0].dt),
       date: element[0].dt,
-      icon: get12HourDataIcon(element),
+      icon: getIconData(element),
       forecast: element,
       temp: mathTemp(element),
     }));
-
   if (list[5]) {
     list.shift();
   }
-
   const changedData = {
     ...response,
     list,
@@ -189,6 +208,11 @@ const mappingData = response => {
 
 // Конвертация в цельсий
 const conToCel = data => Math.floor(data - 273.15);
+// Получить текущее время
+const getCurrentTime = data => {
+  const dataTime = new Date(data * 1000);
+  return addZero(dataTime.getHours()) + ':' + addZero(dataTime.getMinutes());
+};
 // Обработка и запись данных в локальные переменные
 const dataHandling = async (days, OWMData) => {
   if (days == 'one') {
@@ -210,7 +234,18 @@ const dataHandling = async (days, OWMData) => {
   }
   if (days == 'five') {
     fiveDayData = mappingData(OWMData);
-    console.log(fiveDayData);
+    moreInfoData = fiveDayData.list.map(e => ({
+      DayNum: e.DayNum,
+      forecast: e.forecast.map(e => ({
+        time: getCurrentTime(e.dt),
+        temp: Math.floor(e.main.temp - 273.15),
+        humidity: e.main.humidity,
+        pressure: e.main.pressure,
+        speed: e.wind.speed.toFixed(1),
+        icon: 'http://openweathermap.org/img/wn/' + e.weather[0].icon + '.png',
+        iconDescription: e.weather[0].description,
+      })),
+    }));
   }
 };
 
@@ -230,10 +265,10 @@ form.addEventListener('submit', function (e) {
   getWeatherData(req).then(data => dataHandling('five', data));
 });
 
-// Слушаем кнопку Today
+// Слушаем кнопки Today
 btnOneDay[0].addEventListener('click', () => renderOneDayWeather(oneDayData));
 btnOneDay[1].addEventListener('click', () => renderOneDayWeather(oneDayData));
-// Слушаем кнопку 5 Days
+// Слушаем кнопки 5 Days
 btnFiveDays[0].addEventListener('click', () =>
   renderFiveDaysWeather(fiveDayData),
 );
@@ -242,35 +277,6 @@ btnFiveDays[1].addEventListener('click', () =>
 );
 // Слушаем кнопку more info
 daysFiveListblock.addEventListener('click', handleBtnMIClick);
-
-const renderMoreInfo = target => {
-  part6.classList.remove('isHiden');
-  const day = Number(target.dataset.day);
-  const moreDaysListItem = document.querySelectorAll('.timeWeather');
-  if (moreDaysListItem) {
-    moreDaysListItem.forEach(e => e.remove());
-  }
-  fiveDayData.list.forEach(e => {
-    if (e.DayNum == day) {
-      const moreInfoArr = [];
-      e.forecast.forEach(e => {
-        const dataTime = new Date(e.dt * 1000);
-        const obj = {};
-        obj.time =
-          addZero(dataTime.getHours()) + ':' + addZero(dataTime.getMinutes());
-        obj.temp = Math.floor(e.main.temp - 273.15);
-        obj.humidity = e.main.humidity;
-        obj.pressure = e.main.pressure;
-        obj.speed = e.wind.speed.toFixed(1);
-        obj.icon =
-          'http://openweathermap.org/img/wn/' + e.weather[0].icon + '.png';
-        obj.iconDescription = e.weather[0].description;
-        moreInfoArr.push(obj);
-      });
-      moreInfoBlock.innerHTML += moreInfoTemp(moreInfoArr);
-    }
-  });
-};
 
 function handleBtnMIClick(event) {
   event.preventDefault();
