@@ -64,6 +64,7 @@ const renderSunTime = (sunrise, sunset) => {
 // Рендерим погоду на один день
 const renderOneDayWeather = data => {
   if (!document.querySelector('.temperature-box')) {
+    part6.classList.add('isHiden');
     contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
     renderSunTime(oneDayData.sunrise, oneDayData.sunset);
     todayContainer.classList.remove('isHiden');
