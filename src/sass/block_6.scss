@@ -1,11 +1,11 @@
 .moreInfo {
-  display: none;
+  // display: none;
   margin: 0 auto;
   font-family: $main-font;
-  background-color: $color-of-main-card;
-  border-radius: 0px 0px 35px 35px;
+  // background-color: $color-of-main-card;
+  // border-radius: 0px 0px 35px 35px;
   opacity: 0.8;
-  box-shadow: 0 8px 43px 0 $color-of-main-card;
+  // box-shadow: 0 8px 43px 0 $color-of-main-card;
   @media screen and (min-width: 320px) {
     width: 280px;
     height: 290px;

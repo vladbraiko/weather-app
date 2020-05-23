@@ -245,8 +245,7 @@ btnFiveDays[1].addEventListener('click', () =>
 daysFiveListblock.addEventListener('click', handleBtnMIClick);
 
 const renderMoreInfo = target => {
-  part5.style.borderRadius = '35px 35px 0 0';
-  part6.style.display = 'block';
+  part6.classList.remove('isHiden');
   const day = Number(target.dataset.day);
   const moreDaysListItem = document.querySelectorAll('.timeWeather');
   if (moreDaysListItem) {
