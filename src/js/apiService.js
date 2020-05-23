@@ -176,9 +176,7 @@ const mappingData = response => {
       temp: mathTemp(element),
     }));
 
-  if (list[5].icon == 'false') {
-    list.pop();
-  } else {
+  if (list[5]) {
     list.shift();
   }
 
