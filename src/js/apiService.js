@@ -1,3 +1,6 @@
+// Переменные для пагинов
+const moment = require('moment-timezone');
+
 // DOM переменные
 const form = document.querySelector('.search-location__form');
 const btnFiveDays = document.querySelectorAll('.btn-5-days-js');
@@ -53,10 +56,12 @@ function addZero(i) {
   return i;
 }
 const renderSunTime = (sunrise, sunset) => {
-  const sunriseHours = addZero(sunrise.getHours());
-  const sunriseMinutes = addZero(sunrise.getMinutes());
-  const sunsetHours = addZero(sunset.getHours());
-  const sunsetMinutes = addZero(sunset.getMinutes());
+  sunrise = moment(sunrise).utcOffset(oneDayData.timezone / 60);
+  sunset = moment(sunset).utcOffset(oneDayData.timezone / 60);
+  const sunriseHours = addZero(sunrise.hours());
+  const sunriseMinutes = addZero(sunrise.minutes());
+  const sunsetHours = addZero(sunset.hours());
+  const sunsetMinutes = addZero(sunset.minutes());
   dateSunriseTime.textContent = sunriseHours + ':' + sunriseMinutes;
   dateSunsetTime.textContent = sunsetHours + ':' + sunsetMinutes;
 };
@@ -229,6 +234,7 @@ const dataHandling = async (days, OWMData) => {
     oneDayData.icon =
       'http://openweathermap.org/img/wn/' + weather.icon + '.png';
     oneDayData.iconDescription = weather.description;
+    oneDayData.timezone = OWMData.timezone;
 
     renderOneDayWeather(oneDayData);
   }
@@ -300,4 +306,4 @@ const defaultReqWeather = searchName => {
 
 defaultReqWeather();
 
-export { defaultReqWeather };
+export { defaultReqWeather, oneDayData };
