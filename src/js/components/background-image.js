@@ -24,8 +24,8 @@ function setBackgroundImage(backgroundImages) {
   if (backgroundImages.length === 0) {
     backgroundImageService.makeReserveQuery().then(setBackgroundImage);
   } else {
-    refs.backgroundWrapper.style = `background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)),
-  url('${backgroundImages[3].largeImageURL}') center; background-size: cover;`;
+    refs.backgroundWrapper.style = `background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)),
+  url('${backgroundImages[3].largeImageURL}') center fixed; background-size: cover;`;
   }
 }
 
