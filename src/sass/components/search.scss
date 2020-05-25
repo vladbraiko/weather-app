@@ -127,7 +127,6 @@
     }
 
     &-list-sity {
-      margin-right: 12px;
       cursor: pointer;
       font-family: $main-font;
       font-weight: 400;
@@ -145,10 +144,14 @@
 
     &-list-content-renove-city__button {
       background-color: transparent;
+      background-image: url(img/icons/cross.svg);
+      background-repeat: no-repeat;
+      background-size: 10px;
+      background-position: center;
       border: none;
-      color: $main-white-color;
       cursor: pointer;
       height: 16px;
+      width: 16px;
       outline: none;
       padding: 0;
     }

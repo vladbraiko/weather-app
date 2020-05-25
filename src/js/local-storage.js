@@ -1,8 +1,11 @@
 import refs from './refs.js';
-import storage from './cityService.js';
 import updateButtons from '../template/favorite-cities.hbs';
 import addCity from '../template/oneCity.hbs';
 import Siema from 'siema';
+
+const storage = {
+  favoriteCities: [],
+};
 
 createButtons(getLocalStorage());
 
@@ -23,8 +26,8 @@ refs.addToLocalStorageBtn.addEventListener('click', () => {
 });
 
 refs.listOfButtons.addEventListener('click', event => {
-  if (event.target.nodeName === 'path') {
-    const textContent = event.path[3].childNodes[1].textContent;
+  if (event.target.nodeName === 'BUTTON') {
+    const textContent = event.path[1].childNodes[1].textContent;
     const indexForRemove = storage.favoriteCities.indexOf(textContent);
 
     mySiema.remove(indexForRemove);
