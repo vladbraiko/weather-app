@@ -1,41 +1,33 @@
 import refs from './refs.js';
-import storage from './cityService.js';
 import updateButtons from '../template/favorite-cities.hbs';
 import addCity from '../template/oneCity.hbs';
 import Siema from 'siema';
+
+const storage = {
+  favoriteCities: [],
+};
 
 createButtons(getLocalStorage());
 
 refs.addToLocalStorageBtn.addEventListener('click', () => {
   addToLocalStorage();
-});
 
-function addToLocalStorage() {
-  const city = refs.form.value;
-
-  if (!city) {
-    return;
+  if (widthOfUserScreen < 768) {
+    if (storage.favoriteCities.length > 2) {
+      refs.btnNext.hidden = false;
+    }
   }
 
-  refs.addToLocalStorageBtn.classList.add('search-location__form-btn-focus');
-  storage.favoriteCities.push(city);
-
-  localStorage.setItem('city', JSON.stringify(storage.favoriteCities));
-  refs.form.value = '';
-
-  setTimeout(clearClass, 800);
-
-  const addNewButton = addCity(city);
-  const newElement = document.createElement('div');
-
-  newElement.innerHTML = addNewButton;
-
-  mySiema.append(newElement);
-}
+  if (widthOfUserScreen > 768) {
+    if (storage.favoriteCities.length > 4) {
+      refs.btnNext.hidden = false;
+    }
+  }
+});
 
 refs.listOfButtons.addEventListener('click', event => {
-  if (event.target.nodeName === 'path') {
-    const textContent = event.path[3].childNodes[1].textContent;
+  if (event.target.nodeName === 'BUTTON') {
+    const textContent = event.path[1].childNodes[1].textContent;
     const indexForRemove = storage.favoriteCities.indexOf(textContent);
 
     mySiema.remove(indexForRemove);
@@ -43,16 +35,26 @@ refs.listOfButtons.addEventListener('click', event => {
     storage.favoriteCities.splice(indexForRemove, 1);
 
     localStorage.setItem('city', JSON.stringify(storage.favoriteCities));
-  }
 
-  
+    if (widthOfUserScreen < 768) {
+      if (storage.favoriteCities.length <= 2) {
+        refs.btnNext.hidden = true;
+      }
+    }
+
+    if (widthOfUserScreen > 768) {
+      if (storage.favoriteCities.length <= 4) {
+        refs.btnNext.hidden = true;
+      }
+    }
+  }
 });
 
 const mySiema = new Siema({
   selector: refs.listOfButtons,
   perPage: {
     279: 2,
-    767: 4,
+    768: 4,
     1119: 4,
   },
   duration: 200,
@@ -62,8 +64,37 @@ const mySiema = new Siema({
   loop: false,
 });
 
-refs.btnPrev.addEventListener('click', () => mySiema.prev());
-refs.btnNext.addEventListener('click', () => mySiema.next());
+refs.btnPrev.addEventListener('click', () => {
+  mySiema.prev();
+  if (mySiema.currentSlide === 0) {
+    refs.btnPrev.hidden = true;
+  }
+});
+
+refs.btnNext.addEventListener('click', () => {
+  mySiema.next();
+  if (mySiema.currentSlide > 0) {
+    refs.btnPrev.hidden = false;
+  }
+});
+
+if (mySiema.currentSlide === 0) {
+  refs.btnPrev.hidden = true;
+}
+
+const widthOfUserScreen = window.innerWidth;
+
+if (widthOfUserScreen < 768) {
+  if (storage.favoriteCities.length <= 2) {
+    refs.btnNext.hidden = true;
+  }
+}
+
+if (widthOfUserScreen > 768) {
+  if (storage.favoriteCities.length < 4) {
+    refs.btnNext.hidden = true;
+  }
+}
 
 function clearClass() {
   refs.addToLocalStorageBtn.classList.remove('search-location__form-btn-focus');
@@ -86,4 +117,27 @@ function createButtons(cities) {
   const markup = updateButtons(cities);
 
   refs.listOfButtons.insertAdjacentHTML('beforeend', markup);
+}
+
+function addToLocalStorage() {
+  const city = refs.form.value;
+
+  if (!city) {
+    return;
+  }
+
+  refs.addToLocalStorageBtn.classList.add('search-location__form-btn-focus');
+  storage.favoriteCities.push(city);
+
+  localStorage.setItem('city', JSON.stringify(storage.favoriteCities));
+  refs.form.value = '';
+
+  setTimeout(clearClass, 800);
+
+  const addNewButton = addCity(city);
+  const newElement = document.createElement('div');
+
+  newElement.innerHTML = addNewButton;
+
+  mySiema.append(newElement);
 }
