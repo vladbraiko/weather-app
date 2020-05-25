@@ -54,6 +54,7 @@
             </button>
           </div>
         </section>
+
         <div class="today-container">
           <!-- 2 -->
           <section class="today-section">
@@ -150,6 +151,27 @@
             <div class="moreInfo isHiden">
               <div class="moreInfo__block"></div>
             </div>
+          </section>
+          <!-- chart -->
+          <section class="chart-box container">
+            <ul class="header-list">
+              <li class="chart-header">
+                Hide chart
+              </li>
+              <li>
+                <button class="chart-btn chart-btn-js">
+                  <svg viewBox="0 0 512 512" class="chart-icon">
+                    <path
+                      d="M368.007 224c-4.454 0-8.885-1.849-12.048-5.464l-99.959-114.239-99.959 114.239c-5.818 6.65-15.928 7.325-22.577 1.505-6.65-5.819-7.324-15.927-1.505-22.577l112-128c3.038-3.472 7.427-5.464 12.041-5.464s9.003 1.992 12.041 5.464l112 128c5.819 6.65 5.146 16.758-1.505 22.577-3.035 2.656-6.791 3.959-10.529 3.959z"
+                    ></path>
+                  </svg>
+                </button>
+              </li>
+            </ul>
+
+            <!-- <p class="chart-title">Average:</p> -->
+
+            <canvas id="myChart" height="406"> </canvas>
           </section>
         </div>
       </div>

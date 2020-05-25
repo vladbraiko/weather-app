@@ -12,11 +12,13 @@
     padding: 15px;
   }
   @media screen and (min-width: 768px) {
+    margin: 0 auto 24px;
     width: 608px;
     height: 307px;
     padding: 15px 44px 0 44px;
   }
   @media screen and (min-width: 1280px) {
+    margin: 0 auto 4px;
     width: 1060px;
     height: 272px;
     padding: 15px 80px 40px 80px;
