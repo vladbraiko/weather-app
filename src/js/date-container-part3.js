@@ -22,36 +22,14 @@ const intervalId = setInterval(() => {
   const date = new Date();
   const changeDate = moment(date).utcOffset(oneDayData.timezone / 60);
   const dayNow = date.getDate();
-  //   nthNow =
-  const weekDay = new Array();
-  weekDay[0] = 'Sun';
-  weekDay[1] = 'Mon';
-  weekDay[2] = 'Tue';
-  weekDay[3] = 'Wed';
-  weekDay[4] = 'Thu';
-  weekDay[5] = 'Fri';
-  weekDay[6] = 'Sat';
-  const weekDayNow = weekDay[date.getDay()];
+     
+  const weekDayNow = new Intl.DateTimeFormat('en', {weekday: 'short' }).format(date);
 
   dayNowRef.innerHTML = `${dayNow}<sup class="date__day--nth">${nth(
     dayNow,
-  )}</sup> ${weekDayNow}`;
-
-  const month = new Array();
-  month[0] = 'January';
-  month[1] = 'February';
-  month[2] = 'March';
-  month[3] = 'April';
-  month[4] = 'May';
-  month[5] = 'June';
-  month[6] = 'July';
-  month[7] = 'August';
-  month[8] = 'September';
-  month[9] = 'October';
-  month[10] = 'November';
-  month[11] = 'December';
-
-  monthNowRef.textContent = month[date.getMonth()];
+  )}</sup> ${weekDayNow}`;  
+  
+  monthNowRef.textContent = new Intl.DateTimeFormat('en', { month: 'long' }).format(date);
   timeNowRef.textContent =
     pad(changeDate.hours()) +
     ':' +
