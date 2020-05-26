@@ -114,15 +114,15 @@ const renderMoreInfo = target => {
 
 // Получаем день недели
 const weekDayNow = data => {
-  const date = new Date(data * 1000).getDay();
+  const date = new Date(data * 1000);
   const weekDay = new Intl.DateTimeFormat('en', {weekday: 'long' }).format(date);
   return weekDay;
 };
 
 // Получаем месяц
 const monthNow = data => {
-  const date = new Date(data * 1000).getMonth();
-  const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
+  const date = new Date(data * 1000);
+  const month = new Intl.DateTimeFormat('en', {month: 'short' }).format(date);
   return month;
 };
 
