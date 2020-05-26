@@ -30,7 +30,7 @@ const chart = new Chart(ctx, {
         label: ' —  Pressure, m/m',
         backgroundColor: 'rgb(5, 120, 6)',
         borderColor: 'rgb(5, 120, 6)',
-        data: [5, 6],
+        data: [5, 6, 1],
         fill: false,
       },
     ],
@@ -51,6 +51,7 @@ const chart = new Chart(ctx, {
         boxHeight: 12,
         defaultFontColor: 'rgb(5, 120, 6)',
         padding: 10,
+        position: top,
       },
     },
     scales: {
@@ -77,6 +78,6 @@ const chart = new Chart(ctx, {
         },
       ],
     },
-    responsive: true,
+    // responsive: true,
   },
 });
