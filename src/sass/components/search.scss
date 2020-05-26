@@ -64,6 +64,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    position: relative;
 
     &-btnPrev,
     &-btnNext {
@@ -77,6 +78,7 @@
       padding: 0;
       transition: opacity 200ms linear;
       outline: none;
+      position: absolute;
 
       &:hover,
       &:hover svg {
@@ -91,11 +93,20 @@
       }
     }
 
+    &-btnPrev {
+      left: 0;
+    }
+
+    &-btnNext {
+      right: 0;
+    }
+
     &-list {
       list-style: none;
       margin: 0;
       padding: 0;
       width: 178px;
+      height: 27px;
     }
 
     &-list svg {

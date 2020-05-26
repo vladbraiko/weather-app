@@ -39,6 +39,7 @@ refs.listOfButtons.addEventListener('click', event => {
     if (widthOfUserScreen < 768) {
       if (storage.favoriteCities.length <= 2) {
         refs.btnNext.hidden = true;
+        refs.btnPrev.hidden = true;
       }
     }
 
@@ -47,6 +48,10 @@ refs.listOfButtons.addEventListener('click', event => {
         refs.btnNext.hidden = true;
       }
     }
+  }
+
+  if (event.target.nodeName === 'P') {
+    refs.form.value = event.target.textContent;
   }
 });
 
@@ -123,6 +128,10 @@ function addToLocalStorage() {
   const city = refs.form.value;
 
   if (!city) {
+    return;
+  }
+
+  if (storage.favoriteCities.includes(city)) {
     return;
   }
 
