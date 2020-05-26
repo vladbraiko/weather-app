@@ -1,3 +1,16 @@
+.before-chart-box {
+  width: 280px;
+  padding: 0 26px;
+  @media screen and (min-width: 768px) {
+    width: 608px;
+    padding: 0 30px;
+  }
+  @media screen and (min-width: 1280px) {
+    width: 1060px;
+    padding: 0 160px 0 130px;
+  }
+}
+
 .chart-box {
   width: 280px;
   padding: 16px 26px;
@@ -6,9 +19,11 @@
   border-radius: 35px;
   @media screen and (min-width: 768px) {
     width: 608px;
+    padding: 20px 30px;
   }
   @media screen and (min-width: 1280px) {
     width: 1060px;
+    padding: 23px 160px 45px 130px;
   }
 }
 
@@ -40,6 +55,7 @@
 .chart-btn {
   width: 27px;
   height: 27px;
+
   border-radius: 50%;
   outline: none;
   border: none;
@@ -58,17 +74,21 @@
   vertical-align: middle;
 }
 
-// .chart-title {
-//   margin-bottom: 10px;
-//   font-size: 12px;
-//   line-height: 22px;
-//   text-transform: uppercase;
-//   color: rgb(88, 100, 115);
-// }
-
-#myChart {
-  height: 266px;
-  @media screen and (min-width: 768px) {
-    height: 344px;
-  }
+.chart-title {
+  font-size: 12px;
+  line-height: 22px;
+  text-transform: uppercase;
+  color: rgb(88, 100, 115);
 }
+
+// #myChart {
+//   height: 400px;
+
+//   @media screen and (min-width: 768px) {
+//     height: 344px;
+//   }
+
+//   @media screen and (min-width: 1280px) {
+//     height: 425px;
+//   }
+// }

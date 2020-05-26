@@ -30,7 +30,7 @@ const chart = new Chart(ctx, {
         label: ' —  Pressure, m/m',
         backgroundColor: 'rgb(5, 120, 6)',
         borderColor: 'rgb(5, 120, 6)',
-        data: [5, 6],
+        data: [5, 6, 1],
         fill: false,
       },
     ],
@@ -39,16 +39,19 @@ const chart = new Chart(ctx, {
   options: {
     title: {
       display: true,
-      text: 'Average',
-      position: 'top',
+      text: 'Value of indicators',
+      position: 'left',
     },
     legend: {
       display: true,
       align: 'start',
+
       labels: {
         boxWidth: 13,
         boxHeight: 12,
         defaultFontColor: 'rgb(5, 120, 6)',
+        padding: 10,
+        position: top,
       },
     },
     scales: {
@@ -57,6 +60,9 @@ const chart = new Chart(ctx, {
           gridLines: {
             color: 'rgba(255, 255, 255, 0.541)',
           },
+          ticks: {
+            padding: 20,
+          },
         },
       ],
       yAxes: [
@@ -64,9 +70,14 @@ const chart = new Chart(ctx, {
           gridLines: {
             color: 'rgba(255, 255, 255, 0.541)',
             stepSize: 0.5,
+            zeroLineColor: 'rgba(255, 255, 255, 0.541)',
+          },
+          ticks: {
+            padding: 18,
           },
         },
       ],
     },
+    // responsive: true,
   },
 });

@@ -125,8 +125,8 @@
             <h2 class="today-city">Kyiv, UA</h2>
           </section>
           <!-- Part 5 -->
-          <section class="five-days">
-            <div class="five-days-containeer">
+          <div class="five-days-wrapper">
+            <section class="five-days-containeer">
               <!-- City  name -->
               <h2 class="five-days-containeer__city-name">Kyiv, UA</h2>
               <!-- 5 days containeer -->
@@ -146,32 +146,50 @@
                   class="five-days-containeer__arrow five-days-containeer__arrow--hover"
                 />
               </div>
-            </div>
+            </section>
             <!-- Part-6 -->
             <div class="moreInfo isHiden">
               <div class="moreInfo__block"></div>
             </div>
-          </section>
+          </div>
           <!-- chart -->
-          <section class="chart-box isHiden">
-            <ul class="header-list">
-              <li class="chart-header">
-                Hide chart
-              </li>
-              <li>
-                <button class="chart-btn chart-btn-js">
-                  <svg viewBox="0 0 512 512" class="chart-icon">
-                    <path
-                      d="M368.007 224c-4.454 0-8.885-1.849-12.048-5.464l-99.959-114.239-99.959 114.239c-5.818 6.65-15.928 7.325-22.577 1.505-6.65-5.819-7.324-15.927-1.505-22.577l112-128c3.038-3.472 7.427-5.464 12.041-5.464s9.003 1.992 12.041 5.464l112 128c5.819 6.65 5.146 16.758-1.505 22.577-3.035 2.656-6.791 3.959-10.529 3.959z"
-                    ></path>
-                  </svg>
-                </button>
-              </li>
-            </ul>
+          <section class="container">
+            <div class="before-chart-box">
+              <ul class="header-list">
+                <li class="chart-header">
+                  Show chart
+                </li>
+                <li>
+                  <button class="chart-btn chart-btn-js">
+                    <svg viewBox="0 0 24 24" class="chart-icon">
+                      <path
+                        d="M7.406 8.578l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z"
+                      ></path>
+                    </svg>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="chart-box">
+              <ul class="header-list">
+                <li class="chart-header">
+                  Hide chart
+                </li>
+                <li>
+                  <button class="chart-btn chart-btn-js">
+                    <svg viewBox="0 0 24 24" class="chart-icon">
+                      <path
+                        d="M7.406 15.422l-1.406-1.406 6-6 6 6-1.406 1.406-4.594-4.594z"
+                      ></path>
+                    </svg>
+                  </button>
+                </li>
+              </ul>
 
-            <!-- <p class="chart-title">Average:</p> -->
+              <p class="chart-title">Average:</p>
 
-            <canvas id="myChart" height="406"> </canvas>
+              <canvas id="myChart"> </canvas>
+            </div>
           </section>
         </div>
       </div>
