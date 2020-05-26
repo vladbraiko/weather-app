@@ -12,14 +12,6 @@ export default {
     });
   },
 
-  makeReserveQuery() {
-    const url = `https://pixabay.com/api/?image_type=backgrounds&orientation=horizontal&q=clouds&per_page=5&key=${this.apiKey}`;
-
-    return axios.get(url).then(({ data: { hits } }) => {
-      return hits;
-    });
-  },
-
   get query() {
     return this.searchQuery;
   },

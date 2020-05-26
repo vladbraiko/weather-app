@@ -1,6 +1,8 @@
 const dayNowRef = document.querySelector('.date__day');
 const monthNowRef = document.querySelector('.date__month');
 const timeNowRef = document.querySelector('.date__time');
+import { oneDayData } from './apiService';
+const moment = require('moment-timezone');
 
 const nth = function (d) {
   if (d > 3 && d < 21) return 'th';
@@ -18,7 +20,8 @@ const nth = function (d) {
 
 const intervalId = setInterval(() => {
   const date = new Date();
-  dayNow = date.getDate();
+  const changeDate = moment(date).utcOffset(oneDayData.timezone / 60);
+  const dayNow = date.getDate();
   //   nthNow =
   const weekDay = new Array();
   weekDay[0] = 'Sun';
@@ -28,7 +31,7 @@ const intervalId = setInterval(() => {
   weekDay[4] = 'Thu';
   weekDay[5] = 'Fri';
   weekDay[6] = 'Sat';
-  weekDayNow = weekDay[date.getDay()];
+  const weekDayNow = weekDay[date.getDay()];
 
   dayNowRef.innerHTML = `${dayNow}<sup class="date__day--nth">${nth(
     dayNow,
@@ -50,11 +53,11 @@ const intervalId = setInterval(() => {
 
   monthNowRef.textContent = month[date.getMonth()];
   timeNowRef.textContent =
-    pad(date.getHours()) +
+    pad(changeDate.hours()) +
     ':' +
-    pad(date.getMinutes()) +
+    pad(changeDate.minutes()) +
     ':' +
-    pad(date.getSeconds());
+    pad(changeDate.seconds());
 }, 1000);
 
 function pad(value) {

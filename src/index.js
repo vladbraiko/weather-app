@@ -7,4 +7,5 @@ import './js/active-btn.js';
 import './js/local-storage.js';
 import './js/services/geopositionService';
 import './js/five-days-scroll-btn';
+import './js/quotes';
 import './js/chart';
