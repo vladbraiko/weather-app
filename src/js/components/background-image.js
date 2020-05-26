@@ -1,13 +1,7 @@
 import refs from '../refs';
 import backgroundImageService from '../services/background-image-service';
 
-// Установка дефолтного фона при первой загрузке
-backgroundImageService
-  .makeQuery()
-  .then(setBackgroundImage)
-  .catch(() => {
-    backgroundImageService.makeReserveQuery().then(setBackgroundImage);
-  });
+backgroundImageService.makeQuery().then(setBackgroundImage); // Установка дефолтного фона при первой загрузке
 
 refs.searchInput.addEventListener('submit', changeBackgroundImage);
 
@@ -22,7 +16,8 @@ function changeBackgroundImage(event) {
 
 function setBackgroundImage(backgroundImages) {
   if (backgroundImages.length === 0) {
-    backgroundImageService.makeReserveQuery().then(setBackgroundImage);
+    backgroundImageService.query = 'cloudy';
+    backgroundImageService.makeQuery().then(setBackgroundImage);
   } else {
     refs.backgroundWrapper.style = `background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)),
   url('${backgroundImages[3].largeImageURL}') center fixed; background-size: cover;`;
