@@ -153,14 +153,14 @@
             </div>
           </div>
           <!-- chart -->
-          <section class="container isHiden">
-            <div class="before-chart-box">
+          <section class="container">
+            <div class="show-chart-box">
               <ul class="header-list">
-                <li class="chart-header">
+                <li class="chart-header show-chart-header-js">
                   Show chart
                 </li>
                 <li>
-                  <button class="chart-btn chart-btn-js">
+                  <button class="chart-btn show-chart-btn-js">
                     <svg viewBox="0 0 24 24" class="chart-icon">
                       <path
                         d="M7.406 8.578l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z"
@@ -172,11 +172,11 @@
             </div>
             <div class="chart-box">
               <ul class="header-list">
-                <li class="chart-header">
+                <li class="chart-header hide-chart-header-js">
                   Hide chart
                 </li>
                 <li>
-                  <button class="chart-btn chart-btn-js">
+                  <button class="chart-btn hide-chart-btn-js">
                     <svg viewBox="0 0 24 24" class="chart-icon">
                       <path
                         d="M7.406 15.422l-1.406-1.406 6-6 6 6-1.406 1.406-4.594-4.594z"
@@ -187,8 +187,9 @@
               </ul>
 
               <p class="chart-title">Average:</p>
-
-              <canvas id="myChart"> </canvas>
+              <div class="chart-wrapper">
+                <canvas id="myChart"> </canvas>
+              </div>
             </div>
           </section>
         </div>

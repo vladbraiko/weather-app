@@ -1,4 +1,6 @@
 import Chart from 'chart.js';
+import refs from './refs';
+import api from './apiService';
 const ctx = document.getElementById('myChart').getContext('2d');
 const chart = new Chart(ctx, {
   type: 'line',
@@ -51,7 +53,6 @@ const chart = new Chart(ctx, {
         boxHeight: 12,
         defaultFontColor: 'rgb(5, 120, 6)',
         padding: 10,
-        position: top,
       },
     },
     scales: {
@@ -78,6 +79,22 @@ const chart = new Chart(ctx, {
         },
       ],
     },
-    // responsive: true,
+    responsive: true,
+    maintainAspectRatio: false,
   },
 });
+
+refs.btnShowChart.addEventListener('click', onShowChartClick);
+refs.headerOfShowChart.addEventListener('click', onShowChartClick);
+refs.btnHideChart.addEventListener('click', onHideChartClick);
+refs.headerOfHideChart.addEventListener('click', onHideChartClick);
+
+function onShowChartClick() {
+  refs.boxOfShowChart.classList.add('hidden') &
+    refs.chartBox.classList.add('visible');
+}
+
+function onHideChartClick() {
+  refs.chartBox.classList.remove('visible') &
+    refs.boxOfShowChart.classList.remove('hidden');
+}
