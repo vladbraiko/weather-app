@@ -1,52 +1,110 @@
 import refs from './refs.js';
-import storage from './cityService.js';
 import updateButtons from '../template/favorite-cities.hbs';
+import addCity from '../template/oneCity.hbs';
 import Siema from 'siema';
 
-//
+const storage = {
+  favoriteCities: [],
+};
 
 createButtons(getLocalStorage());
-createSiema();
 
 refs.addToLocalStorageBtn.addEventListener('click', () => {
   addToLocalStorage();
-  createButtons(getLocalStorage());
-  createSiema();
-});
 
-//
-function addToLocalStorage() {
-  const city = refs.form.value;
-
-  if (!city) {
-    return;
+  if (widthOfUserScreen < 768) {
+    if (storage.favoriteCities.length > 2) {
+      refs.btnNext.hidden = false;
+    }
   }
 
-  refs.addToLocalStorageBtn.classList.add('search-location__form-btn-focus');
-  storage.favoriteCities.push(city);
+  if (widthOfUserScreen > 768) {
+    if (storage.favoriteCities.length > 4) {
+      refs.btnNext.hidden = false;
+    }
+  }
+});
 
-  localStorage.setItem('city', JSON.stringify(storage.favoriteCities));
-  refs.form.value = '';
+refs.listOfButtons.addEventListener('click', event => {
+  if (event.target.nodeName === 'BUTTON') {
+    const textContent = event.path[1].childNodes[1].textContent;
+    const indexForRemove = storage.favoriteCities.indexOf(textContent);
 
-  setTimeout(clearClass, 800);
+    mySiema.remove(indexForRemove);
+
+    storage.favoriteCities.splice(indexForRemove, 1);
+
+    localStorage.setItem('city', JSON.stringify(storage.favoriteCities));
+
+    if (widthOfUserScreen < 768) {
+      if (storage.favoriteCities.length <= 2) {
+        refs.btnNext.hidden = true;
+        refs.btnPrev.hidden = true;
+      }
+    }
+
+    if (widthOfUserScreen > 768) {
+      if (storage.favoriteCities.length <= 4) {
+        refs.btnNext.hidden = true;
+      }
+    }
+  }
+
+  if (event.target.nodeName === 'P') {
+    refs.form.value = event.target.textContent;
+  }
+});
+
+const mySiema = new Siema({
+  selector: refs.listOfButtons,
+  perPage: {
+    279: 2,
+    768: 4,
+    1119: 4,
+  },
+  duration: 200,
+  draggable: false,
+  multipleDrag: false,
+  threshold: 20,
+  loop: false,
+});
+
+refs.btnPrev.addEventListener('click', () => {
+  mySiema.prev();
+  if (mySiema.currentSlide === 0) {
+    refs.btnPrev.hidden = true;
+  }
+});
+
+refs.btnNext.addEventListener('click', () => {
+  mySiema.next();
+  if (mySiema.currentSlide > 0) {
+    refs.btnPrev.hidden = false;
+  }
+});
+
+if (mySiema.currentSlide === 0) {
+  refs.btnPrev.hidden = true;
 }
 
-//
-//
+const widthOfUserScreen = window.innerWidth;
+
+if (widthOfUserScreen < 768) {
+  if (storage.favoriteCities.length <= 2) {
+    refs.btnNext.hidden = true;
+  }
+}
+
+if (widthOfUserScreen > 768) {
+  if (storage.favoriteCities.length < 4) {
+    refs.btnNext.hidden = true;
+  }
+}
+
 function clearClass() {
   refs.addToLocalStorageBtn.classList.remove('search-location__form-btn-focus');
 }
 
-//
-//
-function createButtons(cities) {
-  const markup = updateButtons(cities);
-
-  refs.listOfButtons.innerHTML = markup;
-}
-
-//
-//
 function getLocalStorage() {
   const arrayOfCities = localStorage.getItem('city');
 
@@ -60,21 +118,35 @@ function getLocalStorage() {
   return parsedCities;
 }
 
-function createSiema() {
-  const mySiema = new Siema({
-    selector: refs.listOfButtons,
-    perPage: 2,
-    draggable: false,
-    multipleDrag: false,
-  });
+function createButtons(cities) {
+  const markup = updateButtons(cities);
 
-  refs.btnPrev.addEventListener('click', () => mySiema.prev());
-  refs.btnNext.addEventListener('click', () => mySiema.next());
+  refs.listOfButtons.insertAdjacentHTML('beforeend', markup);
+}
 
-  refs.listOfButtons.addEventListener('click', event => {
-    if (event.target.nodeName === 'path') {
-      const numberOfTarget = mySiema.currentSlide;
-      mySiema.remove(numberOfTarget);
-    }
-  });
+function addToLocalStorage() {
+  const city = refs.form.value;
+
+  if (!city) {
+    return;
+  }
+
+  if (storage.favoriteCities.includes(city)) {
+    return;
+  }
+
+  refs.addToLocalStorageBtn.classList.add('search-location__form-btn-focus');
+  storage.favoriteCities.push(city);
+
+  localStorage.setItem('city', JSON.stringify(storage.favoriteCities));
+  refs.form.value = '';
+
+  setTimeout(clearClass, 800);
+
+  const addNewButton = addCity(city);
+  const newElement = document.createElement('div');
+
+  newElement.innerHTML = addNewButton;
+
+  mySiema.append(newElement);
 }

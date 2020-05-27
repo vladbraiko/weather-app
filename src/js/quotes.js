@@ -266,10 +266,19 @@ const quotes = [
   },
 ];
 
-//function renderRandomQuote() {
-//  const element = qoutes[Math.floor(Math.random() * qoutes.length)];
-//  document.querySelector(".quote__text").textContent = element[0];
-//  document.querySelector(".quote__author").textContent = element[1];
-//}
-//
-//export { renderRandomQuote };
+function renderRandomQuote() {
+  const quoteTextRef = document.querySelector('.quote__text');
+  const quoteAuthorRef = document.querySelector('.quote__author');
+  
+  const element = quotes[Math.floor(Math.random() * quotes.length)];
+ 
+  quoteTextRef.textContent = element.text;
+  quoteAuthorRef.textContent = element.author;
+}
+
+renderRandomQuote();
+
+
+
+
+

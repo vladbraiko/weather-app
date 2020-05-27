@@ -1,36 +1,22 @@
 .moreInfo {
-  display: none;
-  margin: 0 auto;
   font-family: $main-font;
-  background-color: $color-of-main-card;
-  border-radius: 0px 0px 35px 35px;
   opacity: 0.8;
-  box-shadow: 0 8px 43px 0 $color-of-main-card;
   @media screen and (min-width: 320px) {
-    width: 280px;
-    height: 290px;
-    padding: 15px;
+    padding: 0 10px 35px;
   }
   @media screen and (min-width: 768px) {
-    margin: 0 auto;
-    width: 608px;
-    height: 307px;
-    padding: 15px 44px 0 44px;
+    padding: 0 30px 35px;
   }
   @media screen and (min-width: 1280px) {
-    margin: 0 auto;
-    width: 1060px;
-    height: 272px;
-    padding: 15px 80px 40px 80px;
+    padding: 0 0 35px;
   }
 }
 
 .moreInfo__block {
   display: flex;
   @media screen and (min-width: 320px) {
-    width: 250px;
-    height: 240px;
     overflow-x: auto;
+    padding-bottom: 20px;
     &::-webkit-scrollbar {
       height: 3px;
       bottom: $focus-color;
@@ -40,22 +26,15 @@
       background-color: $focus-color;
     }
   }
-  @media screen and (min-width: 768px) {
-    width: 520px;
-    height: 260px;
-  }
   @media screen and (min-width: 1280px) {
-    width: 900px;
-    height: 220px;
+    justify-content: space-evenly;
     overflow: hidden;
-  }
-  :last-child {
-    margin-right: 0;
   }
 }
 
 .timeWeather {
-  margin-right: 10px;
+  margin: 0 5px;
+  list-style: none;
   min-width: 120px;
   height: 220px;
   font-size: 14px;
@@ -63,6 +42,11 @@
   color: #ffffff8a;
   border: 1px solid #ffffff8a;
   border-radius: 25px;
+
+  @media screen and (min-width: 1280px) {
+    margin: 0;
+  }
+
   &__data {
     text-align: left;
     list-style: none;

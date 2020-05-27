@@ -1,276 +1,176 @@
-// DOM переменные
-const form = document.querySelector('.search-location__form');
-const btnFiveDays = document.querySelectorAll('.btn-5-days-js');
-const btnOneDay = document.querySelectorAll('.btn-today-js');
-const contentBox = document.querySelector('.today-box');
-const part5 = document.querySelector('.five-days-containeer');
-const part6 = document.querySelector('.moreInfo');
-const dateSunriseTime = document.querySelector('.date__sunrise--time');
-const dateSunsetTime = document.querySelector('.date__sunset--time');
-const daysFiveListblock = document.querySelector('.days-list');
-const moreInfoBlock = document.querySelector('.moreInfo__block');
-const part2City = document.querySelector('.today-city');
-const fiveDaysContaineerCityName = document.querySelector(
-  '.five-days-containeer__city-name',
-);
-const todayContainer = document.querySelector('.today-container');
-const fiveDaysContainer = document.querySelector('.five-days-container');
+// Переменные для пагинов
+import axios from 'axios';
 
 // Переменные для обработки погоды
-let searchName = '';
+let location = '';
 let req = '';
 let oneDayData = {};
 let fiveDayData = {};
+let moreInfoData = {};
 
-// Шаблоны
-import oneDayTemp from '../template/oneday.hbs';
-import fiveDayTemp from '../template/fivedays.hbs';
-import moreInfoTemp from '../template/moreInfo.hbs';
+// Переменные для api
+const OWM = 'https://api.openweathermap.org/data/2.5/';
+const apiKey = '48f3906fa74131a752b29b56bb64ec12';
 
-// Рендер времени заката и восхода
+// Получаем правильную ссылку
+const GetOWM_Request = RequestType =>
+  OWM + RequestType + '?q=' + location + '&appid=' + apiKey;
+
+// Делаем запрос на сервер и получаем данные
+const getWeatherData = async url => axios.get(url);
+
+// Функции для получения данных с api
+const getOneDayData = searchName => {
+  location = searchName;
+  req = GetOWM_Request('weather');
+  return getWeatherData(req).then(response =>
+    dataProcessingOneDay(response.data),
+  );
+}; // на один день
+
+const getFiveDayData = () => {
+  req = GetOWM_Request('forecast');
+  return getWeatherData(req).then(response =>
+    dataProcessingFiveDays(response.data),
+  );
+}; // на 5 дней
+
+// Получаем день недели
+const weekDayNow = data => {
+  const date = new Date(data * 1000);
+  const weekDay = new Intl.DateTimeFormat('en', {weekday: 'long' }).format(date);
+  return weekDay;
+};
+
+// Получаем месяц
+const monthNow = data => {
+  const date = new Date(data * 1000);
+  const month = new Intl.DateTimeFormat('en', {month: 'short' }).format(date);
+  return month;
+};
+
+// Получаем обьект icon data
+const getIconData = data => {
+  const date = new Date(data[0].dt * 1000);
+  date.setMilliseconds(0);
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(12);
+  const getTimeObj = data.find(e => e.dt == date.getTime() / 1000);
+  const iconInfo = {};
+  if (getTimeObj) {
+    const weather = getTimeObj.weather[0];
+    const icon = 'http://openweathermap.org/img/wn/' + weather.icon + '.png';
+    iconInfo.icon = icon;
+    iconInfo.iconDescription = weather.description;
+    return iconInfo;
+  } else {
+    let weather = {};
+    if (data[3]) {
+      weather = data[3].weather[0];
+    } else {
+      weather = data[0].weather[0];
+    }
+    const icon = 'http://openweathermap.org/img/wn/' + weather.icon + '.png';
+    iconInfo.icon = icon;
+    iconInfo.iconDescription = weather.description;
+    return iconInfo;
+  }
+};
+
+// Расчет мин/макс температуры
+const mathTemp = data => {
+  data = data.map(e => Math.floor(e.main.temp - 273.15));
+  const temp = {
+    TempMin: Math.min(...data),
+    TempMax: Math.max(...data),
+  };
+  return temp;
+};
+
+// Конвертация в цельсий
+const conToCel = data => Math.floor(data - 273.15);
+
+// Добавляем недостающий 0
 function addZero(i) {
   if (i < 10) {
     i = '0' + i;
   }
   return i;
 }
-const renderSunTime = (sunrise, sunset) => {
-  const sunriseHours = addZero(sunrise.getHours());
-  const sunriseMinutes = addZero(sunrise.getMinutes());
-  const sunsetHours = addZero(sunset.getHours());
-  const sunsetMinutes = addZero(sunset.getMinutes());
-  dateSunriseTime.textContent = sunriseHours + ':' + sunriseMinutes;
-  dateSunsetTime.textContent = sunsetHours + ':' + sunsetMinutes;
+
+// Получить текущее время
+const getCurrentTime = data => {
+  const dataTime = new Date(data * 1000);
+  return addZero(dataTime.getHours()) + ':' + addZero(dataTime.getMinutes());
 };
 
-// Рендерим погоду на один день
-const renderOneDayWeather = data => {
-  if (!document.querySelector('.temperature-box')) {
-    contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
-    renderSunTime(oneDayData.sunrise, oneDayData.sunset);
-    todayContainer.classList.remove('isHiden');
-    fiveDaysContainer.classList.add('isHiden');
-  } else {
-    document.querySelector('.temperature-box').remove();
-    contentBox.insertAdjacentHTML('afterbegin', oneDayTemp(data));
-    renderSunTime(oneDayData.sunrise, oneDayData.sunset);
+// Обработка данных на один день
+const dataProcessingOneDay = response => {
+  const main = response.main;
+  const sys = response.sys;
+  const weather = response.weather[0];
+  oneDayData.city = response.name;
+  oneDayData.countryCode = response.sys.country;
+  oneDayData.temp = conToCel(main.temp);
+  oneDayData.tempMin = conToCel(main.temp_min);
+  oneDayData.tempMax = conToCel(main.temp_max);
+  oneDayData.sunrise = new Date(sys.sunrise * 1000);
+  oneDayData.sunset = new Date(sys.sunset * 1000);
+  oneDayData.icon = 'http://openweathermap.org/img/wn/' + weather.icon + '.png';
+  oneDayData.iconDescription = weather.description;
+  oneDayData.timezone = response.timezone;
+  return oneDayData;
+};
+
+// Обработка данных на 5 дней
+const getDate = data => new Date(data.dt * 1000).getDate();
+const dataProcessingFiveDays = response => {
+  const dates = response.list
+    .map(element => getDate(element))
+    .filter((el, idx, arr) => arr.indexOf(el) === idx);
+  const list = dates
+    .map(el => response.list.filter(elem => getDate(elem) === el))
+    .map(element => ({
+      DayNum: getDate(element[0]),
+      Day: weekDayNow(element[0].dt),
+      Month: monthNow(element[0].dt),
+      date: element[0].dt,
+      icon: getIconData(element),
+      forecast: element,
+      temp: mathTemp(element),
+    }));
+  if (list[5]) {
+    list.shift();
   }
+  const changedData = {
+    ...response,
+    list,
+  };
+  fiveDayData = changedData;
+  return fiveDayData;
 };
 
-// Рендерим погоду на 5 дней
-const renderFiveDaysWeather = data => {
-  if (document.querySelector('.temperature-box')) {
-    document.querySelector('.temperature-box').remove();
-    todayContainer.classList.add('isHiden');
-    fiveDaysContainer.classList.remove('isHiden');
-    part2City.textContent = fiveDayData.city + ', ' + fiveDayData.countryCode;
-    fiveDaysContaineerCityName.textContent =
-      fiveDayData.city + ', ' + fiveDayData.countryCode;
-  }
-  const daysListItem = document.querySelectorAll('.days-list__item');
-  if (daysListItem) {
-    daysListItem.forEach(e => e.remove());
-  }
-  daysFiveListblock.innerHTML += fiveDayTemp(data);
+// Обработка данных для блока more info
+const dataProcessingMoreInfo = () => {
+  moreInfoData = fiveDayData.list.map(e => ({
+    DayNum: e.DayNum,
+    forecast: e.forecast.map(e => ({
+      time: getCurrentTime(e.dt),
+      temp: Math.floor(e.main.temp - 273.15),
+      humidity: e.main.humidity,
+      pressure: e.main.pressure,
+      speed: e.wind.speed.toFixed(1),
+      icon: 'http://openweathermap.org/img/wn/' + e.weather[0].icon + '.png',
+      iconDescription: e.weather[0].description,
+    })),
+  }));
+  return moreInfoData;
 };
 
-// Получаем правильную ссылку
-function GetOWM_Request(RequestType, Location) {
-  const OWM = 'https://api.openweathermap.org/data/2.5/';
-  const apiKey = '48f3906fa74131a752b29b56bb64ec12';
-  return OWM + RequestType + '?q=' + Location + '&appid=' + apiKey;
-}
-
-// Делаем запрос на сервер и получаем данные
-const getWeatherData = async OWM => {
-  try {
-    const result = await fetch(OWM);
-    return result.json();
-  } catch (err) {
-    throw err;
-  }
+export default {
+  oneDayData,
+  getOneDayData,
+  getFiveDayData,
+  dataProcessingMoreInfo,
 };
-
-// Обрабатываем данные и записываем в свои локальные
-const weekDayNow = data => {
-  const weekDay = [];
-  weekDay[0] = 'Sunday';
-  weekDay[1] = 'Monday';
-  weekDay[2] = 'Tuesday';
-  weekDay[3] = 'Wednesday';
-  weekDay[4] = 'Thursday';
-  weekDay[5] = 'Friday';
-  weekDay[6] = 'Saturday';
-  return weekDay[data];
-};
-
-const monthNow = data => {
-  const month = [];
-  month[0] = 'Jan';
-  month[1] = 'Feb';
-  month[2] = 'Mar';
-  month[3] = 'Apr';
-  month[4] = 'May';
-  month[5] = 'Jun';
-  month[6] = 'Jul';
-  month[7] = 'Aug';
-  month[8] = 'Sep';
-  month[9] = 'Oct';
-  month[10] = 'Nov';
-  month[11] = 'Dec';
-  return month[data];
-};
-
-const get12HourData = data => {
-  data.setMilliseconds(0);
-  data.setSeconds(0);
-  data.setMinutes(0);
-  data.setHours(12);
-  const dayData = fiveDayData.list.find(e => e.dt == data.getTime() / 1000);
-  return dayData;
-};
-
-const dataHandling = (days, OWMData) => {
-  if (days == 'one') {
-    oneDayData.temp = Math.floor(OWMData.main.temp - 273.15);
-    oneDayData.tempMin = Math.floor(OWMData.main.temp_min - 273.15);
-    oneDayData.tempMax = Math.floor(OWMData.main.temp_max - 273.15);
-    oneDayData.city = OWMData.name;
-    oneDayData.countryCode = OWMData.sys.country;
-    oneDayData.sunrise = new Date(OWMData.sys.sunrise * 1000);
-    oneDayData.sunset = new Date(OWMData.sys.sunset * 1000);
-    oneDayData.icon =
-      'http://openweathermap.org/img/wn/' + OWMData.weather[0].icon + '.png';
-    oneDayData.iconDescription = OWMData.weather[0].description;
-
-    renderOneDayWeather(oneDayData);
-  }
-  if (days == 'five') {
-    fiveDayData.city = OWMData.city.name;
-    fiveDayData.countryCode = OWMData.city.country;
-    fiveDayData.list = OWMData.list;
-    fiveDayData.days = [];
-    fiveDayData.list.map(e => {
-      const dataTime = new Date(e.dt * 1000);
-      const arr = fiveDayData.days.map(e => e.DayNum);
-      const daysList = {};
-      if (arr.indexOf(dataTime.getDate()) == -1) {
-        daysList.DayNum = dataTime.getDate();
-        daysList.Day = weekDayNow(dataTime.getDay());
-        daysList.Month = monthNow(dataTime.getMonth());
-        const getIcon = get12HourData(dataTime);
-        if (getIcon) {
-          daysList.icon =
-            'http://openweathermap.org/img/wn/' +
-            getIcon.weather[0].icon +
-            '.png';
-          daysList.iconDescription = getIcon.weather[0].description;
-        }
-
-        fiveDayData.days.push(daysList);
-      }
-    });
-    fiveDayData.days.map(daysNumber => {
-      const arr = fiveDayData.list.filter(e => {
-        const dataTime = new Date(e.dt * 1000);
-        if (dataTime.getUTCDate() == daysNumber.DayNum) {
-          return e;
-        }
-      });
-      if (arr.length == 0) {
-        daysNumber.isData = false;
-      } else {
-        const arrTemp = arr.map(e => Math.floor(e.main.temp - 273.15));
-        daysNumber.TempMin = Math.min(...arrTemp);
-        daysNumber.TempMax = Math.max(...arrTemp);
-        daysNumber.list = arr;
-      }
-    });
-    if (fiveDayData.days[5].isData == false) {
-      fiveDayData.days.pop();
-    } else {
-      fiveDayData.days.shift();
-    }
-    console.log(fiveDayData);
-  }
-};
-
-// Слушаем submit поля поиска погоды
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  const formData = new FormData(this);
-  searchName = formData.get('query');
-
-  // Получаем данные за один день и записываем в наш обьект
-  req = GetOWM_Request('weather', searchName);
-  getWeatherData(req).then(data => dataHandling('one', data));
-
-  // Получаем данные за 5 дней и записываем в наш обьект
-  req = GetOWM_Request('forecast', searchName);
-  getWeatherData(req).then(data => dataHandling('five', data));
-});
-
-// Слушаем кнопку Today
-btnOneDay[0].addEventListener('click', () => renderOneDayWeather(oneDayData));
-btnOneDay[1].addEventListener('click', () => renderOneDayWeather(oneDayData));
-// Слушаем кнопку 5 Days
-btnFiveDays[0].addEventListener('click', () =>
-  renderFiveDaysWeather(fiveDayData),
-);
-btnFiveDays[1].addEventListener('click', () =>
-  renderFiveDaysWeather(fiveDayData),
-);
-// Слушаем кнопку more info
-daysFiveListblock.addEventListener('click', handleBtnMIClick);
-
-const renderMoreInfo = target => {
-  part5.style.borderRadius = '35px 35px 0 0';
-  part6.style.display = 'block';
-  const day = Number(target.dataset.day);
-  const moreDaysListItem = document.querySelectorAll('.timeWeather');
-  if (moreDaysListItem) {
-    moreDaysListItem.forEach(e => e.remove());
-  }
-  fiveDayData.days.forEach(e => {
-    if (e.DayNum == day) {
-      const moreInfoArr = [];
-      e.list.forEach(e => {
-        const dataTime = new Date(e.dt * 1000);
-        const obj = {};
-        obj.time =
-          addZero(dataTime.getHours()) + ':' + addZero(dataTime.getMinutes());
-        obj.temp = Math.floor(e.main.temp - 273.15);
-        obj.humidity = e.main.humidity;
-        obj.pressure = e.main.pressure;
-        obj.speed = e.wind.speed.toFixed(1);
-        obj.icon =
-          'http://openweathermap.org/img/wn/' + e.weather[0].icon + '.png';
-        obj.iconDescription = e.weather[0].description;
-        moreInfoArr.push(obj);
-      });
-      moreInfoBlock.innerHTML += moreInfoTemp(moreInfoArr);
-    }
-  });
-};
-
-function handleBtnMIClick(event) {
-  event.preventDefault();
-  const target = event.target;
-  if (target.nodeName == 'BUTTON') {
-    renderMoreInfo(target);
-  }
-}
-
-const defaultReqWeather = searchName => {
-  searchName = searchName || 'Kyiv';
-
-  req = GetOWM_Request('weather', searchName);
-  getWeatherData(req).then(data => dataHandling('one', data));
-
-  req = GetOWM_Request('forecast', searchName);
-  getWeatherData(req).then(data => dataHandling('five', data));
-};
-
-defaultReqWeather();
-
-export { defaultReqWeather };

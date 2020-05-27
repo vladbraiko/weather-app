@@ -1,9 +1,13 @@
 import axios from 'axios';
 import backgroundImageService from '../services/background-image-service';
-import { defaultReqWeather } from '../apiService';
+import { defaultReqWeather } from '../render/renderOneDay';
 import { setBackgroundImage } from '../components/background-image';
 
-navigator.geolocation.getCurrentPosition(success);
+navigator.geolocation.getCurrentPosition(success, defaultData);
+
+function defaultData() {
+  defaultReqWeather('Kyiv');
+}
 
 function success(position) {
   const apiKey = 'd4683b09d0c94ec0aebf0b2e043decbf';

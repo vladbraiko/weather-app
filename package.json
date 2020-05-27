@@ -54,6 +54,7 @@
     "core-js": "^3.6.4",
     "handlebars": "^4.7.6",
     "lodash.debounce": "^4.0.8",
+    "moment-timezone": "^0.5.31",
     "siema": "^1.5.1"
   }
 }
