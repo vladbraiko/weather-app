@@ -1,7 +1,7 @@
 const dayNowRef = document.querySelector('.date__day');
 const monthNowRef = document.querySelector('.date__month');
 const timeNowRef = document.querySelector('.date__time');
-import { oneDayData } from './apiService';
+import api from './apiService';
 const moment = require('moment-timezone');
 
 const nth = function (d) {
@@ -20,7 +20,10 @@ const nth = function (d) {
 
 const intervalId = setInterval(() => {
   const date = new Date();
-  const changeDate = moment(date).utcOffset(oneDayData.timezone / 60);
+  // const changeDate = moment(date).utcOffset(api.oneDayData.timezone / 60);
+  const changeDate = api.oneDayData.timezone
+    ? moment(date).utcOffset(api.oneDayData.timezone / 60)
+    : moment(date);
   const dayNow = date.getDate();
   //   nthNow =
   const weekDay = new Array();
