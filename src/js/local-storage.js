@@ -3,10 +3,19 @@ import updateButtons from '../template/favorite-cities.hbs';
 import addCity from '../template/oneCity.hbs';
 import Siema from 'siema';
 
+
+
 const storage = {
   favoriteCities: [],
 };
 
+refs.form.addEventListener("input", function() {
+  this.value = this.value[0].toUpperCase() + this.value.slice(1);
+
+  if (this.value == "") 
+  return;
+  
+})
 createButtons(getLocalStorage());
 
 refs.addToLocalStorageBtn.addEventListener('click', () => {
@@ -29,6 +38,8 @@ refs.listOfButtons.addEventListener('click', event => {
   if (event.target.nodeName === 'BUTTON') {
     const textContent = event.path[1].childNodes[1].textContent;
     const indexForRemove = storage.favoriteCities.indexOf(textContent);
+
+    
 
     mySiema.remove(indexForRemove);
 
@@ -96,7 +107,7 @@ if (widthOfUserScreen < 768) {
 }
 
 if (widthOfUserScreen > 768) {
-  if (storage.favoriteCities.length < 4) {
+  if (storage.favoriteCities.length <= 4) {
     refs.btnNext.hidden = true;
   }
 }
