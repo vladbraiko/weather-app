@@ -37,35 +37,16 @@ const getFiveDayData = () => {
 
 // Получаем день недели
 const weekDayNow = data => {
-  const date = new Date(data * 1000).getDay();
-  const weekDay = [];
-  weekDay[0] = 'Sunday';
-  weekDay[1] = 'Monday';
-  weekDay[2] = 'Tuesday';
-  weekDay[3] = 'Wednesday';
-  weekDay[4] = 'Thursday';
-  weekDay[5] = 'Friday';
-  weekDay[6] = 'Saturday';
-  return weekDay[date];
+  const date = new Date(data * 1000);
+  const weekDay = new Intl.DateTimeFormat('en', {weekday: 'long' }).format(date);
+  return weekDay;
 };
 
 // Получаем месяц
 const monthNow = data => {
-  const date = new Date(data * 1000).getMonth();
-  const month = [];
-  month[0] = 'Jan';
-  month[1] = 'Feb';
-  month[2] = 'Mar';
-  month[3] = 'Apr';
-  month[4] = 'May';
-  month[5] = 'Jun';
-  month[6] = 'Jul';
-  month[7] = 'Aug';
-  month[8] = 'Sep';
-  month[9] = 'Oct';
-  month[10] = 'Nov';
-  month[11] = 'Dec';
-  return month[date];
+  const date = new Date(data * 1000);
+  const month = new Intl.DateTimeFormat('en', {month: 'short' }).format(date);
+  return month;
 };
 
 // Получаем обьект icon data
