@@ -1,5 +1,5 @@
 {{#each this}}
-<div class="timeWeather">
+<li class="timeWeather">
     <p class="timeWeather__time">{{time}}</p>
     <p class="timeWeather__temp">
         <img src="{{icon}}" alt="{{iconDescription}}" class="timeWeather__temp-icon">
@@ -10,5 +10,5 @@
         <li class="timeWeather__humidity">{{humidity}}%</li>
         <li class="timeWeather__wind">{{speed}} m/s</li>
     </ul>
-</div>
+</li>
 {{/each}}
