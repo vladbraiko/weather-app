@@ -33,6 +33,7 @@ function setBackground(location) {
     .makeQuery()
     .then(setBackgroundImage)
     .catch(() => {
-      backgroundImageService.makeReserveQuery().then(setBackgroundImage);
+      backgroundImageService.query = 'cloudy';
+      backgroundImageService.makeQuery().then(setBackgroundImage);
     });
 }
