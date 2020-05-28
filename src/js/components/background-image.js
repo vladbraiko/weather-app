@@ -6,15 +6,19 @@ backgroundImageService.makeQuery().then(setBackgroundImage); // Установк
 refs.searchInput.addEventListener('submit', changeBackgroundImage);
 
 function changeBackgroundImage(event) {
-  event.preventDefault();
-
-  const form = event.currentTarget;
-  backgroundImageService.query = form.elements.query.value;
-
+  if (typeof event == 'object') {
+    event.preventDefault();
+    const form = event.currentTarget;
+    backgroundImageService.query = form.elements.query.value;
+  } else {
+    backgroundImageService.query = event;
+  }
   backgroundImageService.makeQuery().then(setBackgroundImage);
 }
 
 function setBackgroundImage(backgroundImages) {
+  // console.log(backgroundImages);
+
   if (backgroundImages.length === 0) {
     backgroundImageService.query = 'cloudy';
     backgroundImageService.makeQuery().then(setBackgroundImage);
@@ -24,4 +28,4 @@ function setBackgroundImage(backgroundImages) {
   }
 }
 
-export { setBackgroundImage };
+export { setBackgroundImage, changeBackgroundImage };

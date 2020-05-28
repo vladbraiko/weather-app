@@ -13,8 +13,6 @@ const headerOfShowChart = document.querySelector('.show-chart-header-js');
 const headerOfHideChart = document.querySelector('.hide-chart-header-js');
 const boxOfShowChart = document.querySelector('.show-chart-box');
 const chartBox = document.querySelector('.chart-box');
-
-// DOM переменные
 const btnFiveDays = document.querySelectorAll('.btn-5-days-js');
 const btnOneDay = document.querySelectorAll('.btn-today-js');
 const contentBox = document.querySelector('.today-box');

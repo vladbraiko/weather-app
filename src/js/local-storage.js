@@ -2,20 +2,20 @@ import refs from './refs.js';
 import updateButtons from '../template/favorite-cities.hbs';
 import addCity from '../template/oneCity.hbs';
 import Siema from 'siema';
-
-
+import { renderOneDayWeather } from './render/renderOneDay';
+import api from './apiService';
+import { changeBackgroundImage } from './components/background-image';
 
 const storage = {
   favoriteCities: [],
 };
 
-refs.form.addEventListener("input", function() {
-  this.value = this.value[0].toUpperCase() + this.value.slice(1);
-
-  if (this.value == "") 
-  return;
-  
-})
+refs.form.addEventListener('input', function () {
+  if (this.value) {
+    this.value = this.value[0].toUpperCase() + this.value.slice(1);
+    if (this.value == '') return;
+  }
+});
 createButtons(getLocalStorage());
 
 refs.addToLocalStorageBtn.addEventListener('click', () => {
@@ -39,8 +39,6 @@ refs.listOfButtons.addEventListener('click', event => {
     const textContent = event.path[1].childNodes[1].textContent;
     const indexForRemove = storage.favoriteCities.indexOf(textContent);
 
-    
-
     mySiema.remove(indexForRemove);
 
     storage.favoriteCities.splice(indexForRemove, 1);
@@ -62,7 +60,12 @@ refs.listOfButtons.addEventListener('click', event => {
   }
 
   if (event.target.nodeName === 'P') {
-    refs.form.value = event.target.textContent;
+    const location = event.target.textContent;
+    refs.form.value = location;
+    // Делаем запрос и рендерим на один день
+    api.getOneDayData(location).then(data => renderOneDayWeather(data));
+    // Меняем картинку по городу
+    changeBackgroundImage(location);
   }
 });
 

@@ -72,4 +72,4 @@ const defaultReqWeather = searchName => {
   api.getOneDayData(searchName).then(data => renderOneDayWeather(data));
 };
 
-export { defaultReqWeather };
+export { defaultReqWeather, renderOneDayWeather };
