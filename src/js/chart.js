@@ -1,88 +1,109 @@
 import Chart from 'chart.js';
 import refs from './refs';
 import api from './apiService';
+const moment = require('moment-timezone');
 const ctx = document.getElementById('myChart').getContext('2d');
-const chart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ['January', 'February', 'March', 'April', 'May'],
-    datasets: [
-      {
-        label: ' — Temperature, C°',
-        backgroundColor: 'rgb(255, 107, 8)',
-        borderColor: 'rgb(255, 107, 8)',
-        data: [3, 4, 1],
-        fill: false,
-      },
-      {
-        label: ' —  Humidity, %',
-        backgroundColor: 'rgb(10, 6, 234)',
-        borderColor: 'rgb(10, 6, 234)',
-        data: [2, 1, -5],
-        fill: false,
-      },
-      {
-        label: ' —  Speed, m/s',
-        backgroundColor: 'rgb(235, 155, 5)',
-        borderColor: 'rgb(235, 155, 5)',
-        data: [2, 3],
-        fill: false,
-      },
-      {
-        label: ' —  Pressure, m/m',
-        backgroundColor: 'rgb(5, 120, 6)',
-        borderColor: 'rgb(5, 120, 6)',
-        data: [5, 6, 1],
-        fill: false,
-      },
-    ],
-  },
+let chartData = {};
+const average = (req, data) => {
+  const values = data.map(e => e[req]);
+  // console.log(values);
 
-  options: {
-    title: {
-      display: true,
-      text: 'Value of indicators',
-      position: 'left',
-    },
-    legend: {
-      display: true,
-      align: 'start',
-
-      labels: {
-        boxWidth: 13,
-        boxHeight: 12,
-        defaultFontColor: 'rgb(5, 120, 6)',
-        padding: 10,
-      },
-    },
-    scales: {
-      xAxes: [
+  const sum = values.reduce((previous, current) => (current += previous));
+  const avg = sum / values.length;
+  return Number(avg.toFixed(1));
+};
+const getChartData = () => {
+  const data = api.dataProcessingMoreInfo();
+  chartData.days = data.map(e => moment(e.date * 1000).format('ll'));
+  chartData.temp = data.map(e => average('temp', e.forecast));
+  chartData.humidity = data.map(e => average('humidity', e.forecast));
+  chartData.pressure = data.map(e => average('pressure', e.forecast));
+  chartData.speed = data.map(e => average('speed', e.forecast));
+};
+const renderChart = () => {
+  getChartData();
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: chartData.days,
+      datasets: [
         {
-          gridLines: {
-            color: 'rgba(255, 255, 255, 0.541)',
-          },
-          ticks: {
-            padding: 20,
-          },
+          label: ' — Temperature, C°',
+          backgroundColor: 'rgb(255, 107, 8)',
+          borderColor: 'rgb(255, 107, 8)',
+          data: chartData.temp,
+          fill: false,
         },
-      ],
-      yAxes: [
         {
-          gridLines: {
-            color: 'rgba(255, 255, 255, 0.541)',
-            stepSize: 0.5,
-            zeroLineColor: 'rgba(255, 255, 255, 0.541)',
-          },
-          ticks: {
-            padding: 18,
-          },
+          label: ' —  Humidity, %',
+          backgroundColor: 'rgb(10, 6, 234)',
+          borderColor: 'rgb(10, 6, 234)',
+          data: chartData.humidity,
+          fill: false,
+        },
+        {
+          label: ' —  Speed, m/s',
+          backgroundColor: 'rgb(235, 155, 5)',
+          borderColor: 'rgb(235, 155, 5)',
+          data: chartData.speed,
+          fill: false,
+        },
+        {
+          label: ' —  Pressure, m/m',
+          backgroundColor: 'rgb(5, 120, 6)',
+          borderColor: 'rgb(5, 120, 6)',
+          data: chartData.pressure,
+          fill: false,
         },
       ],
     },
-    responsive: true,
-    maintainAspectRatio: false,
-  },
-});
+
+    options: {
+      title: {
+        display: true,
+        text: 'Value of indicators',
+        position: 'left',
+      },
+      legend: {
+        display: true,
+        align: 'start',
+
+        labels: {
+          boxWidth: 13,
+          boxHeight: 12,
+          defaultFontColor: 'rgb(5, 120, 6)',
+          padding: 10,
+        },
+      },
+      scales: {
+        xAxes: [
+          {
+            gridLines: {
+              color: 'rgba(255, 255, 255, 0.541)',
+            },
+            ticks: {
+              padding: 20,
+            },
+          },
+        ],
+        yAxes: [
+          {
+            gridLines: {
+              color: 'rgba(255, 255, 255, 0.541)',
+              stepSize: 0.5,
+              zeroLineColor: 'rgba(255, 255, 255, 0.541)',
+            },
+            ticks: {
+              padding: 18,
+            },
+          },
+        ],
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+    },
+  });
+};
 
 refs.btnShowChart.addEventListener('click', onShowChartClick);
 refs.headerOfShowChart.addEventListener('click', onShowChartClick);
@@ -92,6 +113,7 @@ refs.headerOfHideChart.addEventListener('click', onHideChartClick);
 function onShowChartClick() {
   refs.boxOfShowChart.classList.add('hidden') &
     refs.chartBox.classList.add('visible');
+  renderChart();
 }
 
 function onHideChartClick() {
