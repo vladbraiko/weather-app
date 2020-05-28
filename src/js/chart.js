@@ -110,6 +110,9 @@ refs.btnShowChart.addEventListener('click', onShowChartClick);
 refs.headerOfShowChart.addEventListener('click', onShowChartClick);
 refs.btnHideChart.addEventListener('click', onHideChartClick);
 refs.headerOfHideChart.addEventListener('click', onHideChartClick);
+// Слушаем кнопки Today
+refs.btnOneDay[0].addEventListener('click', onHideChartClick);
+refs.btnOneDay[1].addEventListener('click', onHideChartClick);
 
 function onShowChartClick() {
   refs.boxOfShowChart.classList.add('hidden') &

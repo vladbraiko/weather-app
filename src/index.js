@@ -2,7 +2,7 @@ import './styles.scss';
 import './js/scripts';
 import './js/components/background-image';
 import './js/date-container-part3';
-import './js/active-btn.js';
+import './js/active-btn-fivedays-card.js';
 import './js/local-storage.js';
 import './js/services/geopositionService';
 import './js/five-days-scroll-btn';
