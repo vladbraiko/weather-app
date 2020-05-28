@@ -20,7 +20,7 @@ function setBackgroundImage(backgroundImages) {
     backgroundImageService.makeQuery().then(setBackgroundImage);
   } else {
     refs.backgroundWrapper.style = `background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)),
-  url('${backgroundImages[3].largeImageURL}') center fixed; background-size: cover;`;
+  url('${backgroundImages[2].largeImageURL}') center fixed; background-size: cover;`;
   }
 }
 
