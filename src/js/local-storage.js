@@ -12,8 +12,7 @@ const storage = {
 
 refs.form.addEventListener('input', function () {
   if (this.value) {
-    this.value = this.value[0].toUpperCase() + this.value.slice(1);
-    if (this.value == '') return;
+    return (this.value = this.value[0].toUpperCase() + this.value.slice(1));
   }
 });
 createButtons(getLocalStorage());
