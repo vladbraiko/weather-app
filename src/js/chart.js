@@ -3,6 +3,7 @@ import refs from './refs';
 import api from './apiService';
 const moment = require('moment-timezone');
 const ctx = document.getElementById('myChart').getContext('2d');
+
 let chartData = {};
 const average = (req, data) => {
   const values = data.map(e => e[req]);
