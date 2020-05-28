@@ -38,14 +38,16 @@ const getFiveDayData = () => {
 // Получаем день недели
 const weekDayNow = data => {
   const date = new Date(data * 1000);
-  const weekDay = new Intl.DateTimeFormat('en', {weekday: 'long' }).format(date);
+  const weekDay = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(
+    date,
+  );
   return weekDay;
 };
 
 // Получаем месяц
 const monthNow = data => {
   const date = new Date(data * 1000);
-  const month = new Intl.DateTimeFormat('en', {month: 'short' }).format(date);
+  const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
   return month;
 };
 
@@ -154,13 +156,14 @@ const dataProcessingFiveDays = response => {
 // Обработка данных для блока more info
 const dataProcessingMoreInfo = () => {
   moreInfoData = fiveDayData.list.map(e => ({
+    date: e.date,
     DayNum: e.DayNum,
     forecast: e.forecast.map(e => ({
       time: getCurrentTime(e.dt),
       temp: Math.floor(e.main.temp - 273.15),
       humidity: e.main.humidity,
       pressure: e.main.pressure,
-      speed: e.wind.speed.toFixed(1),
+      speed: Number(e.wind.speed.toFixed(1)),
       icon: 'http://openweathermap.org/img/wn/' + e.weather[0].icon + '.png',
       iconDescription: e.weather[0].description,
     })),
