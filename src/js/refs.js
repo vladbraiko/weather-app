@@ -27,6 +27,7 @@ const fiveDaysContaineerCityName = document.querySelector(
 );
 const todayContainer = document.querySelector('.today-container');
 const fiveDaysContainer = document.querySelector('.five-days-container');
+const moreInfoBtn = document.querySelectorAll('moreInfo_scroll_arrow');
 
 export default {
   searchInput,
@@ -54,4 +55,5 @@ export default {
   fiveDaysContaineerCityName,
   todayContainer,
   fiveDaysContainer,
+  moreInfoBtn,
 };

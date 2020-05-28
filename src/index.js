@@ -8,6 +8,7 @@ import './js/services/geopositionService';
 import './js/five-days-scroll-btn';
 import './js/quotes';
 import './js/chart';
+import './js/more-info-scroll-btn.js';
 
 // api
 import './js/apiService';

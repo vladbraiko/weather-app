@@ -5,10 +5,40 @@
     padding: 0 10px 35px;
   }
   @media screen and (min-width: 768px) {
-    padding: 0 30px 35px;
+    padding: 0 30px 25px;
   }
   @media screen and (min-width: 1280px) {
     padding: 0 0 35px;
+  }
+
+  &_scroll {
+    @media screen and (min-width: 320px) {
+      display: none;
+    }
+    @media screen and (min-width: 768px) {
+      display: flex;
+      justify-content: space-between;
+    }
+    @media screen and (min-width: 1280px) {
+      display: none;
+    }
+
+    &_arrow {
+      width: 28px;
+      height: 28px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      border: none;
+      padding: 0;
+      transition: opacity 200ms linear;
+      outline: none;
+      img {
+        margin: 0 auto;
+      }
+      &_hidden {
+        opacity: 0;
+      }
+    }
   }
 }
 
@@ -25,6 +55,9 @@
     &::-webkit-scrollbar-thumb {
       background-color: $focus-color;
     }
+  }
+  @media screen and (min-width: 768px) {
+    overflow: hidden;
   }
   @media screen and (min-width: 1280px) {
     justify-content: space-evenly;
