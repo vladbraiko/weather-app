@@ -2,6 +2,8 @@
 
 Application to check the weather depending on your location, or anywhere in the world.
 
+Try [here](https://vladbraiko.github.io/weather-app/)
+
 This project was made for learning purpose, using
 
 - JavaScript
